@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -8,17 +8,42 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {connect, useDispatch} from 'react-redux';
+import {loginAction} from '../store/actions/auth';
 
-const App = ({navigation}) => {
+const Login = props => {
   const [email, onChangeText] = useState('');
   const [password, onChangePsd] = useState('');
+  const dispatch = useDispatch();
+  const navigation = props.navigation;
+  const handleLogin = () => {
+    const body = {
+      user: email,
+      password,
+    };
+    dispatch(loginAction(body));
+    console.log(body);
+  };
+
+  useEffect(() => {
+    if (props.auth.isFulfilled === true) {
+      // return navigate('/', {replace: true});
+      navigation.navigate('StackTab');
+      console.log('login success');
+    }
+    if (props.auth.isRejected === true) {
+      console.log('login failed');
+    }
+  }, [props.auth, navigation]);
   return (
     <View style={styles.container}>
       <ImageBackground
         source={require('../assets/login.png')}
         resizeMode="cover"
         style={styles.image}>
-        <Text style={styles.text}>LET'S EXPLORE THE WORLD </Text>
+        <Text style={styles.text} onPress={() => navigation.navigate('Home')}>
+          LET'S EXPLORE THE WORLD
+        </Text>
         <SafeAreaView>
           <TextInput
             style={styles.input}
@@ -112,4 +137,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  };
+};
+
+// export default Login;
+export default connect(mapStateToProps)(Login);

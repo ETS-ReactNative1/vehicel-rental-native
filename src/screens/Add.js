@@ -22,6 +22,13 @@ export default function Add() {
       />
       <View>
         <Text>Description</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeNumber}
+          value={number}
+          placeholder="useless placeholder"
+          // keyboardType="numeric"
+        />
         <Text>Location</Text>
         <Text>Add to</Text>
         <Text>Stock</Text>
