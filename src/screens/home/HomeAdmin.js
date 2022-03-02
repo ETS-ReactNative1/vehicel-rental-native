@@ -8,14 +8,16 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
-import Carousel from '../components/CarouselAdmin';
 
 export default function Home({navigation}) {
   const [search, onSearch] = useState('');
   const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
   return (
     <View>
-      <Image style={styles.tinyLogo} source={require('../assets/login.png')} />
+      <Image
+        style={styles.tinyLogo}
+        source={require('../../assets/homebg.png')}
+      />
       <TextInput
         style={styles.input}
         onChangeText={onSearch}
@@ -43,10 +45,8 @@ export default function Home({navigation}) {
           <Text>View more</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <Carousel />
-      </View>
-      <TouchableOpacity style={styles.addnew}
+      <TouchableOpacity
+        style={styles.addnew}
         onPress={() => navigation.navigate('Add')}>
         <Text style={styles.addnewtxt}>Add new item</Text>
       </TouchableOpacity>

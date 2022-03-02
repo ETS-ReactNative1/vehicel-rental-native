@@ -8,11 +8,32 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
+import {registerAuth} from '../../src/modules/utils/auth';
 
 function Register({navigation}) {
-  const [email, onChangeText] = useState('');
-  const [phone, onChangePhone] = useState('');
-  const [password, onChangePsd] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const registerUser = async () => {
+    try {
+      const body = {
+        email_address: email,
+        name: name,
+        password: password,
+      };
+      // console.log(body);
+      // console.log(register);
+      const result = await registerAuth(body);
+      // console.log(result.data);
+      if (result.data.result) {
+        console.log(result);
+        navigation.navigate('Login');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -23,28 +44,29 @@ function Register({navigation}) {
         <SafeAreaView>
           <TextInput
             style={styles.input}
-            onChangeText={onChangeText}
-            value={email}
+            onChangeText={text => setEmail(text)}
+            // value={email}
             placeholder="email"
           />
           <TextInput
             style={styles.input}
-            onChangeText={onChangePhone}
-            value={phone}
-            placeholder="mobile phone"
+            onChangeText={text => setName(text)}
+            // value={name}
+            placeholder="username"
           />
           <TextInput
             style={styles.input}
-            onChangeText={onChangePsd}
-            value={password}
+            onChangeText={text => setPassword(text)}
+            // value={password}
             placeholder="password"
           />
         </SafeAreaView>
 
         <View style={styles.containerFp}>
-          <TouchableOpacity style={styles.btnLgn}>
+          <TouchableOpacity style={styles.btnLgn} onPress={registerUser}>
             <Text style={styles.login}>Signup</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Login')}>

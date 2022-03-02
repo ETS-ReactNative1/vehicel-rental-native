@@ -12,14 +12,15 @@ import {connect, useDispatch} from 'react-redux';
 import {loginAction} from '../store/actions/auth';
 
 const Login = props => {
-  const [email, onChangeText] = useState('');
-  const [password, onChangePsd] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  console.log(process.env.API_URL);
   const dispatch = useDispatch();
   const navigation = props.navigation;
-  const handleLogin = () => {
+  const loginHandler = () => {
     const body = {
-      user: email,
-      password,
+      email_address: email,
+      password: password,
     };
     dispatch(loginAction(body));
     console.log(body);
@@ -27,8 +28,7 @@ const Login = props => {
 
   useEffect(() => {
     if (props.auth.isFulfilled === true) {
-      // return navigate('/', {replace: true});
-      navigation.navigate('StackTab');
+      navigation.navigate('NavBottom');
       console.log('login success');
     }
     if (props.auth.isRejected === true) {
@@ -41,20 +41,22 @@ const Login = props => {
         source={require('../assets/login.png')}
         resizeMode="cover"
         style={styles.image}>
-        <Text style={styles.text} onPress={() => navigation.navigate('Home')}>
+        <Text
+          style={styles.text}
+          onPress={() => navigation.navigate('NavBottom')}>
           LET'S EXPLORE THE WORLD
         </Text>
         <SafeAreaView>
           <TextInput
             style={styles.input}
-            onChangeText={onChangeText}
-            value={email}
+            onChangeText={text => setEmail(text)}
+            // value={email}
             placeholder="email"
           />
           <TextInput
             style={styles.input}
-            onChangeText={onChangePsd}
-            value={password}
+            onChangeText={text => setPassword(text)}
+            // value={password}
             placeholder="password"
           />
           <TouchableOpacity
@@ -64,9 +66,10 @@ const Login = props => {
           </TouchableOpacity>
         </SafeAreaView>
         <View style={styles.containerFp}>
-          <TouchableOpacity style={styles.btnLgn}>
+          <TouchableOpacity style={styles.btnLgn} onPress={loginHandler}>
             <Text style={styles.login}>Login</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Register')}>

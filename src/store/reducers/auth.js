@@ -5,6 +5,7 @@ const initialState = {
   userData: {
     token: null,
     id: null,
+    roles: null,
   },
   isPending: false,
   isFulfilled: false,
@@ -29,10 +30,11 @@ const authReducer = (prevState = initialState, action) => {
     // case authLogin + fulfilled:
     case authLogin.concat('_', Fulfilled):
       const data = action.payload.data;
+      console.log(data)
       const userData = {
         ...prevState.userData,
-        token: data.data.token,
-        id: data.data.id,
+        token: data.token,
+        roles: data.roles,
         // user: data.result,
       };
       return {
@@ -45,11 +47,12 @@ const authReducer = (prevState = initialState, action) => {
     // case authLogin + rejected:
     case authLogin.concat('_', Rejected):
       const err = action.payload;
+      console.log(err.response)
       return {
         ...prevState,
         isPending: false,
         isRejected: true,
-        err: null,
+        err: err,
       };
 
     default:
