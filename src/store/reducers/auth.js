@@ -5,7 +5,7 @@ const initialState = {
   userData: {
     token: null,
     id: null,
-    roles: null,
+    role: null,
   },
   isPending: false,
   isFulfilled: false,
@@ -33,9 +33,9 @@ const authReducer = (prevState = initialState, action) => {
       console.log(data)
       const userData = {
         ...prevState.userData,
-        token: data.token,
-        roles: data.roles,
-        // user: data.result,
+        token: data.result.token,
+      id: data.result.payload.id,
+      role: data.result.payload.role,
       };
       return {
         ...prevState,

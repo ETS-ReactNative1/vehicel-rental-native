@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  TextInput,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import SelectDropdown from 'react-native-select-dropdown';
+// import SelectDropdown from 'react-native-select-dropdown';
 import {getAllVehicle} from '../../modules/utils/vehicles';
 
 import axios from 'axios';
 export default function Home({navigation}) {
-  const [search, onSearch] = useState('');
   const [cars, setCars] = useState([]);
   const [motorbikes, setMotorbikes] = useState([]);
   const [bikes, setBikes] = useState([]);
@@ -28,6 +28,7 @@ export default function Home({navigation}) {
           setCars(res[0].data.result.data);
           setMotorbikes(res[1].data.result.data);
           setBikes(res[2].data.result.data);
+          // console.log(res);
         }),
       )
       .catch(err => console.log(err));
@@ -39,10 +40,17 @@ export default function Home({navigation}) {
 
   return (
     <ScrollView>
+      <View style={styles.search}>
       <ImageBackground
         source={require('../../assets/homebg.png')}
         style={styles.tinyLogo}
-      />
+      >
+       <TextInput
+       style={styles.input}
+       placeholder="search"
+       />
+      </ImageBackground>
+      </View>
       <View style={styles.imageWrapper}>
         <Text style={styles.title}>Cars</Text>
         <Text
@@ -232,4 +240,17 @@ const styles = StyleSheet.create({
     height: 150,
     marginLeft: 50,
   },
+  input: {
+    height: 60,
+    margin: 12,
+    borderWidth: 0,
+    padding: 10,
+    borderRadius: 15,
+    backgroundColor: '#393939',
+    color : 'white',
+    placeholderTextColor : '#fff',
+  },
+  // search:{
+  //   position: 'realative',
+  // }
 });

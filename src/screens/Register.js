@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     lineHeight: 34,
     fontWeight: 'bold',
-    padding: 60,
+    padding: 40,
     flex: 1,
   },
   input: {

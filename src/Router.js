@@ -101,6 +101,7 @@ const NavBottom = () => (
         ),
         tabBarActiveBackgroundColor: '#f5f5f5',
       }}
+      
     />
   </Tab.Navigator>
 );
