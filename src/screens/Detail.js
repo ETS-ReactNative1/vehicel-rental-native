@@ -7,16 +7,25 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
 import {Button} from 'react-native';
-// import DatePicker from 'react-native-date-picker';
+import {Picker} from '@react-native-picker/picker';
 
-function Detail() {
-  const days = ['1day', '2day', '3day', '4day'];
+function Detail({navigation}) {
   const [date, setDate] = useState(new Date());
+  const [counter, setCounter] = useState(1);
   const [open, setOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState();
+
+  const addCounter = () => {
+    const newCounter = counter + 1;
+    setCounter(newCounter);
+  };
+  const subCounter = () => {
+    const newCounter = counter - 1 < 0 ? 0 : counter - 1;
+    setCounter(newCounter);
+  };
   return (
-    <ScrollView>
+    <View>
     <View style={styles.container}>
       <Image source={require('../assets/detailbg.png')} style={styles.bg} />
       <View style={styles.containerDesc}>
@@ -33,42 +42,34 @@ function Detail() {
         <Image source={require('../assets/walk.png')} style={styles.icon} />
         <Text style={styles.descTxt}>3.2 miles from your location</Text>
       </View>
+
+      <View style={styles.counterWrapper}>
+        <Text style={styles.menuTitle}>Select Bikes :</Text>
+          <View  style={styles.btnCounterWrapper}>
+          <Text style={styles.counter} onPress={subCounter}>-</Text>
+          <Text style={styles.counterText}>{counter}</Text>
+          <Text style={styles.counter} onPress={addCounter}>+</Text>
+          </View>
+        </View>
+
       <View style={styles.days}>
-        <SelectDropdown 
-          data={days}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item;
-          }}
-        />
-        {/* <View>
-          <Button title="Open" onPress={() => setOpen(true)} />
-          <DatePicker
-            modal
-            open={open}
-            date={date}
-            onConfirm={date => {
-              setOpen(false);
-              setDate(date);
-            }}
-            onCancel={() => {
-              setOpen(false);
-            }}
-          />
-        </View> */}
+      <Picker
+      selectedValue={selectedLanguage}
+      onValueChange={(itemValue, itemIndex) =>
+        setSelectedLanguage(itemValue)
+      }>
+          <Picker.Item label="Java" value="java" />
+          <Picker.Item label="JavaScript" value="js" />
+        </Picker>
+     
       </View>
       <View>
-        <TouchableOpacity style={styles.btnReserve}>
+        <TouchableOpacity style={styles.btnReserve} onPress={()=> navigation.navigate('Payment')}>
           <Text style={styles.reserve}>Reservation</Text>
         </TouchableOpacity>
       </View>
     </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -127,6 +128,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 350,
     marginLeft: '7%',
+    marginBottom : 40,
+    marginTop : 20,
   },
   reserve: {
     color: '#000000',
@@ -141,7 +144,37 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     // flexDirection: 'row',
     marginLeft : '40%',
-  }
+  },
+  menuTitle:{
+    fontSize : 17,
+    fontWeight : '900',
+    margin : 10,
+    paddingLeft : '6%',
+  },
+  counter:{
+    fontSize : 17,
+    fontWeight : '900',
+    margin : 10,
+    backgroundColor : '#FFCD61',
+    borderRadius : 12,
+    width : 25,
+    height : 25,
+    paddingLeft : 8,
+  },
+  counterText:{
+    fontSize : 17,
+    fontWeight : '900',
+    margin : 10,
+  },
+  counterWrapper:{
+    flexDirection: 'row',
+  },
+  btnCounterWrapper:{
+    marginLeft : '27%',
+    flex : 1,
+    textAlign : 'right',
+    flexDirection : 'row',
+  },
 });
 
 export default Detail;

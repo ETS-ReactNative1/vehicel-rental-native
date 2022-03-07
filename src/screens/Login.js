@@ -46,6 +46,7 @@ const Login = props => {
           onPress={() => navigation.navigate('NavBottom')}>
           LET'S EXPLORE THE WORLD
         </Text>
+          <View style={styles.containerFp}>
         <SafeAreaView>
           <TextInput
             style={styles.input}
@@ -65,7 +66,6 @@ const Login = props => {
             <Text style={styles.forgotPassword}>Forgot password ?</Text>
           </TouchableOpacity>
         </SafeAreaView>
-        <View style={styles.containerFp}>
           <TouchableOpacity style={styles.btnLgn} onPress={loginHandler}>
             <Text style={styles.login}>Login</Text>
           </TouchableOpacity>
@@ -73,7 +73,7 @@ const Login = props => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.forgotPassword}>
+            <Text style={styles.signup}>
               Don't have account? Sign up now
             </Text>
           </TouchableOpacity>
@@ -98,12 +98,13 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     lineHeight: 34,
     fontWeight: 'bold',
-    padding: 60,
+    paddingLeft: 20,
+    paddingTop: 60,
     flex: 1,
   },
   input: {
     height: 60,
-    margin: 12,
+    margin: 10,
     borderWidth: 0,
     padding: 10,
     borderRadius: 15,
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
     flex: 2,
+    // marginTop:
   },
   button: {
     alignItems: 'center',
@@ -123,6 +125,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     textAlign: 'left',
+    marginRight : '58%',
+  },
+  signup: {
+    color: 'white',
+    fontSize: 18,
   },
   btnLgn: {
     alignItems: 'center',
@@ -131,6 +138,9 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 60,
     textAlign: 'center',
+    marginBottom : 40,
+    marginLeft : 10,
+    marginRight : 10,
   },
   login: {
     color: '#000000',

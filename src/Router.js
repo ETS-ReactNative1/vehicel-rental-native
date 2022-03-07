@@ -11,7 +11,12 @@ import Home from './screens/home/Home';
 import Add from './screens/Add';
 import Chat from './screens/Chat';
 import Search from './screens/Search';
+import History from './screens/History';
 import Detail from './screens/Detail';
+import Payment from './screens/payment/Payment';
+import GetPayment from './screens/payment/GetPayment';
+import FinishPayment from './screens/payment/FinishPayment';
+import FinishedPayment from './screens/payment/FinishedPayment';
 import Profile from './screens/profile/Profile';
 
 const Stack = createStackNavigator();
@@ -43,13 +48,13 @@ const NavBottom = () => (
       }}
     />
     <Tab.Screen
-      name="Search"
-      component={Search}
+      name="History"
+      component={History}
       options={{
         tabBarIcon: ({focused}) => (
           <View>
             <Image
-              source={require('./assets/Search2.png')}
+              source={require('./assets/history.png')}
               resizeMode="cover"
               style={{
                 width: 25,
@@ -118,6 +123,10 @@ const Router = () => (
     <Stack.Screen name="Add" component={Add} />
     <Stack.Screen name="NavBottom" component={NavBottom} />
     <Stack.Screen name="Detail" component={Detail} />
+    <Stack.Screen name="Payment" component={Payment} />
+    <Stack.Screen name="GetPayment" component={GetPayment} />
+    <Stack.Screen name="FinishPayment" component={FinishPayment} />
+    <Stack.Screen name="FinishedPayment" component={FinishedPayment} />
   </Stack.Navigator>
 );
 

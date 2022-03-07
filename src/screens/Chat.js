@@ -11,10 +11,9 @@ export default function Chat() {
  <TextInput
    style={styles.input}
  placeholder="search" />
-
    <ActiveChat />
    <ChatUn />
-    <Text>You have no conversation left</Text>
+    <Text style={styles.conv}>You have no conversation left</Text>
    </ScrollView>
    </View>
   );
@@ -28,5 +27,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     backgroundColor: '#DFDEDE',
+  },
+  conv:{
+    marginLeft : '25%',
   },
 })

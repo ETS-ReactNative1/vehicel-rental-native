@@ -12,9 +12,12 @@ import {
 import React, {useState, useEffect} from 'react';
 // import SelectDropdown from 'react-native-select-dropdown';
 import {getAllVehicle} from '../../modules/utils/vehicles';
+import { useSelector } from 'react-redux';
+import AddProductBtn from '../../components/AddProductBtn';
 
 import axios from 'axios';
 export default function Home({navigation}) {
+  const role = useSelector((state) => state.auth.userData.role);
   const [cars, setCars] = useState([]);
   const [motorbikes, setMotorbikes] = useState([]);
   const [bikes, setBikes] = useState([]);
@@ -39,7 +42,7 @@ export default function Home({navigation}) {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.bg}>
       <View style={styles.search}>
       <ImageBackground
         source={require('../../assets/homebg.png')}
@@ -48,7 +51,13 @@ export default function Home({navigation}) {
        <TextInput
        style={styles.input}
        placeholder="search"
+       placeholderTextColor = 'white'
        />
+        { role === 1 && (
+          <View>
+          <AddProductBtn />
+          </View>
+        )}
       </ImageBackground>
       </View>
       <View style={styles.imageWrapper}>
@@ -179,9 +188,12 @@ export default function Home({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  bg:{
+    backgroundColor : '#fff',
+  },
   tinyLogo: {
     width: 425,
-    height: 250,
+    height: 300,
   },
   di: {
     width: 225,
@@ -207,6 +219,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'grey',
     textAlign: 'right',
     color: '#000',
+    padding : 20,
   },
   imageWrapper: {
     flexDirection: 'row',
@@ -242,13 +255,21 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 60,
-    margin: 12,
+    // margin: 12,
     borderWidth: 0,
     padding: 10,
     borderRadius: 15,
     backgroundColor: '#393939',
     color : 'white',
-    placeholderTextColor : '#fff',
+    // placeholderTextColor : '#fff',
+    // placeholderTextColor : '#ffffff',
+    opacity : .5,
+    width : '80%',
+    marginLeft: '8%',
+    marginBottom: 12,
+    marginTop: 32,
+    fontSize: 17,
+    fontWeight : 'bold',
   },
   // search:{
   //   position: 'realative',
