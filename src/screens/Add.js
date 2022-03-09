@@ -1,5 +1,6 @@
 import {SafeAreaView,ScrollView, StyleSheet, TextInput, Text, View, TouchableOpacity, Image, TouchableHighlight} from 'react-native';
 import React, {useState} from 'react';
+import AddImage from '../components/AddImage'
 
 export default function Add() {
   const [text, onChangeText] = useState('');
@@ -14,6 +15,43 @@ export default function Add() {
     const newCounter = counter - 1 < 0 ? 0 : counter - 1;
     setCounter(newCounter);
   };
+
+  const [filePath, setFilePath] = useState({});
+
+  const chooseFile = () => {
+    let options = {
+      title: 'Select Image',
+      customButtons: [
+        {
+          name: 'customOptionKey',
+          title: 'Choose Photo from Custom Option'
+        },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log(
+          'User tapped custom button: ',
+          response.customButton
+        );
+        alert(response.customButton);
+      } else {
+        let source = response;
+        setFilePath(source);
+      }
+    });
+  };
+
   return (
     <ScrollView style={styles.bg}>
       <TouchableHighlight style={styles.imgWrapper}>
@@ -47,7 +85,7 @@ export default function Add() {
         />
         <View style={styles.locationWrapper}>
         <Text style={styles.menuTitle}>Location</Text>
-        <SelectDropdown 
+        {/* <SelectDropdown 
           data={days}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
@@ -58,7 +96,8 @@ export default function Add() {
           rowTextForSelection={(item, index) => {
             return item;
           }}
-        />
+        /> */}
+        <AddImage />
         </View>
         <View style={styles.locationWrapper}>
         <Text style={styles.menuTitle}>Add to</Text>

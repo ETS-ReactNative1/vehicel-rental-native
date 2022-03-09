@@ -31,7 +31,7 @@ export default function Home({navigation}) {
           setCars(res[0].data.result.data);
           setMotorbikes(res[1].data.result.data);
           setBikes(res[2].data.result.data);
-          // console.log(res);
+          console.log(res);
         }),
       )
       .catch(err => console.log(err));

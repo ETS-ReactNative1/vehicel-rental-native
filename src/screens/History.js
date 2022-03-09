@@ -5,7 +5,9 @@ import {Picker} from '@react-native-picker/picker';
 
 export default function History() {
   const [checked, setChecked] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState();
+
   return (
     <ScrollView>
       <Text>History Order</Text>
@@ -34,10 +36,10 @@ export default function History() {
         </View>
     <View>
     <Picker
-  selectedValue={selectedLanguage}
-  onValueChange={(itemValue, itemIndex) =>
-    setSelectedLanguage(itemValue)
-  }>
+      selectedValue={selectedLanguage}
+      onValueChange={(itemValue, itemIndex) =>
+        setSelectedLanguage(itemValue)
+      }>
       <Picker.Item label="Java" value="java" />
       <Picker.Item label="JavaScript" value="js" />
     </Picker>

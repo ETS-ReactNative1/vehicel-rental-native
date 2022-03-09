@@ -15,3 +15,9 @@ const getBike = axios.get(
 export const getAllVehicle = () => {
   return axios.all([getCar, getMotorbike, getBike]);
 };
+
+///:id
+const URL = `https://arka-vehicle-rental.herokuapp.com/vehicles/` ;
+export const getVehicle = (id) => {
+  return axios.get(URL + id)
+}
