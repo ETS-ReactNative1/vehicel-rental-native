@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'center',
+    // opacity: 0.7,
   },
   text: {
     color: 'white',

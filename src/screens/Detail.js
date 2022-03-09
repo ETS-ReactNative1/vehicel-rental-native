@@ -11,12 +11,14 @@ import {Button} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {getVehicle} from '../modules/utils/vehicles';
+import { useSelector } from 'react-redux';
 
 function Detail({navigation, route}) {
+  const role = useSelector((state) => state.auth.userData.role);
   const [counter, setCounter] = useState(1);
   const [vehicle, setVehicle] = useState([]);
   const [open, setOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedDay, setSelectedDay] = useState();
 
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
@@ -57,11 +59,20 @@ function Detail({navigation, route}) {
     });
   }, []);
 
+  console.log(date, selectedDay, counter)
+
   console.log(route.params.id)
   return (
     <ScrollView>
       <View style={styles.container}>
         <Image source={require('../assets/detailbg.png')} style={styles.bg} />
+        { role === 1 && (
+          <View>
+             <Image source={require('../assets/delete.png')}
+              style={styles.icon} 
+              />
+          </View>
+        )}
         <View style={styles.containerDesc}>
           <Text style={styles.titleDetail}>{vehicle.name} Rp.{vehicle.price}/day</Text>
           <Text style={styles.titleDesc}>Max for {vehicle.capacity} person</Text>
@@ -75,6 +86,7 @@ function Detail({navigation, route}) {
             {vehicle.location}
           </Text>
         </View>
+       
         <View style={styles.desc}>
           <Image source={require('../assets/walk.png')} style={styles.icon} />
           <Text style={styles.descTxt}>3.2 miles from your location</Text>
@@ -94,14 +106,7 @@ function Detail({navigation, route}) {
         </View>
 
         <View style={styles.days}>
-          <Picker style={styles.dropdownMenu}
-            selectedValue={selectedLanguage}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedLanguage(itemValue)
-            }>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
-          </Picker>
+         
 
       <View style={styles.datePicker}>
       <View>
@@ -123,13 +128,38 @@ function Detail({navigation, route}) {
         />
         )}
     </View>
+    <Picker style={styles.dropdownMenu}
+    selectedValue={selectedDay}
+    onValueChange={(itemValue, itemIndex) =>
+      setSelectedDay(itemValue)
+    }>
+    <Picker.Item label="day 1" value="1" />
+    <Picker.Item label="day 2" value="2" />
+    <Picker.Item label="day 3" value="3" />
+    <Picker.Item label="day 4" value="4" />
+    <Picker.Item label="day 5" value="5" />
+    <Picker.Item label="day 6" value="6" />
+    <Picker.Item label="day7" value="7" />
+  </Picker>        
     </View>
 
         <View>
           <TouchableOpacity
             style={styles.btnReserve}
-            onPress={() => navigation.navigate('Payment')}>
-            <Text style={styles.reserve}>Reservation</Text>
+            onPress={() =>{
+              const param = {
+                id: vehicle.id,
+              };
+              const paymentBody ={
+                date : date,
+                day : selectedDay,
+                bikes : counter,
+                price : vehicle.price,
+              }
+            navigation.navigate('Payment',{ param, paymentBody})}}>
+            <Text style={styles.reserve}>
+            {role === 1 ? 'Update Item' : 'Reservation'}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -1,7 +1,15 @@
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-export default function GetPayment({navigation}) {
+export default function GetPayment({navigation, route}) {
+  const {body, paymentBody, payType} = route.params;
+  console.log('test body :', body)
+  console.log('payement body :', paymentBody)
+  console.log('payement body :', payType)
+  const a = paymentBody.date.toDateString();
+  console.log(a)
+  // paymentBody.bikes) etc 
+
   return (
     <ScrollView style={styles.bg}>
       <View>
@@ -11,13 +19,20 @@ export default function GetPayment({navigation}) {
       <Image source={require('../../assets/detailbg.png')} style={styles.pic}/>
       </View>
       <View style={styles.desc}>
-        <Text style={styles.info}>2 Vespa</Text>
-        <Text style={styles.info}>Prepayement (no tax)</Text>
-        <Text style={styles.info}>4 days</Text>
-        <Text style={styles.info}>Jan 18 2021 to Jan 22 2021</Text>
-      <Text style={styles.price}>Rp. 245.000</Text>
+        <Text style={styles.info}>{paymentBody.bikes} Vespa</Text>
+        <Text style={styles.info}>{payType.paymentType}</Text>
+        <Text style={styles.info}>{paymentBody.day} days</Text>
+        <Text style={styles.info}> {a}to Jan 22 2021</Text>
+      <Text style={styles.price}>Rp. {paymentBody.price}</Text>
       </View>
-      <TouchableOpacity style={styles.btnGetPay} onPress={() => navigation.navigate('GetPayment')}>
+      <TouchableOpacity style={styles.btnGetPay} onPress={() => 
+       { 
+        //   const param = {
+        //   id: vehicle.id,
+        // };
+        navigation.navigate('FinishPayment',
+        // params
+         { body, paymentBody, payType})}}>
         <Text style={styles.payBtn}>Finish Payment</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -43,7 +58,7 @@ const styles = StyleSheet.create({
     },
     price:{
         fontSize : 32,
-        fontWeight : 'bolder',
+        fontWeight : 'bold',
         color: 'black',
         marginTop : 35,
     },

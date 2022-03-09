@@ -1,27 +1,31 @@
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-export default function FinishedPayment({navigation}) {
+export default function Success({navigation}) {
   return (
     <ScrollView style={styles.bg}>
-      <View>W
+      
         <Text style={styles.success}>Payment Success!</Text>
-      </View>
+      {/* </View> */}
+
       <View>
       <Image source={require('../../assets/detailbg.png')} style={styles.pic}/>
       </View>
+
       <View style={styles.desc}>
           <Text style={styles.info}>2 Vespa</Text>
           <Text style={styles.info}>Prepayement (no tax)</Text>
           <Text style={styles.info}>4 days</Text>
           <Text style={styles.info}>Jan 18 2021 to Jan 22 2021</Text>
       </View>
+
       <View style={styles.desc}>
           <Text style={styles.info}>ID : 9087627392624</Text>
           <Text style={styles.info}>Jessica Jane (jjane@mail.com)</Text>
           <Text style={styles.info}>0890876789 <Text style={styles.status}>(active)</Text></Text>
           <Text style={styles.info}>Jakarta, Indonesia</Text>
       </View>
+
       <TouchableOpacity style={styles.btnPrice} onPress={() => navigation.navigate('GetPayment')}>
         <Text style={styles.priceBtn}>Total : 245.000</Text>
       </TouchableOpacity>
@@ -49,8 +53,9 @@ const styles = StyleSheet.create({
     success:{
         fontSize : 32,
         fontWeight : 'bolder',
+        // width: 150,
         color: '#087E0D',
-        margin : '45%',
+        margin : 30,
     },
     desc :{
      paddingLeft : 20,

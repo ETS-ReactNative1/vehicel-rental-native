@@ -16,7 +16,7 @@ import Detail from './screens/Detail';
 import Payment from './screens/payment/Payment';
 import GetPayment from './screens/payment/GetPayment';
 import FinishPayment from './screens/payment/FinishPayment';
-import FinishedPayment from './screens/payment/FinishedPayment';
+import Success from './screens/payment/Success';
 import Profile from './screens/profile/Profile';
 
 const Stack = createStackNavigator();
@@ -126,7 +126,7 @@ const Router = () => (
     <Stack.Screen name="Payment" component={Payment} />
     <Stack.Screen name="GetPayment" component={GetPayment} />
     <Stack.Screen name="FinishPayment" component={FinishPayment} />
-    <Stack.Screen name="FinishedPayment" component={FinishedPayment} />
+    <Stack.Screen name="Success" component={Success} />
   </Stack.Navigator>
 );
 

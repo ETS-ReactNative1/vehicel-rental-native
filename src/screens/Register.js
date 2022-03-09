@@ -5,7 +5,7 @@ import {
   View,
   SafeAreaView,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity, KeyboardAvoidingView,TouchableWithoutFeedback, Keyboard
 } from 'react-native';
 import React, {useState} from 'react';
 import {registerAuth} from '../../src/modules/utils/auth';
@@ -35,13 +35,18 @@ function Register({navigation}) {
     }
   };
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/signup.png')}
-        resizeMode="cover"
-        style={styles.image}>
+    <>
+      <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.containerKeyboard}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <ImageBackground
+      source={require('../assets/signup.png')}
+      resizeMode="cover"
+      style={styles.image}>
         <Text style={styles.text}>LET'S HAVE SOME RIDE </Text>
-        <SafeAreaView>
           <TextInput
             style={styles.input}
             onChangeText={text => setEmail(text)}
@@ -60,7 +65,6 @@ function Register({navigation}) {
             // value={password}
             placeholder="password"
           />
-        </SafeAreaView>
 
         <View style={styles.containerFp}>
           <TouchableOpacity style={styles.btnLgn} onPress={registerUser}>
@@ -76,7 +80,10 @@ function Register({navigation}) {
           </TouchableOpacity>
         </View>
       </ImageBackground>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
     </View>
+      </>
   );
 }
 
@@ -85,8 +92,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    flex: 1,
+    flex: 5,
     justifyContent: 'center',
+    // opacity: 0.8,
   },
   text: {
     color: 'white',
@@ -109,7 +117,8 @@ const styles = StyleSheet.create({
   containerFp: {
     justifyContent: 'center',
     paddingHorizontal: 10,
-    flex: 2,
+    flex: 1,
+    marginTop : 50
   },
   button: {
     alignItems: 'center',
@@ -135,6 +144,28 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 35,
   },
+  containerKeyboard: {
+    flex: 1,
+  },
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: "space-around"
+  },
+  header: {
+    fontSize: 36,
+    marginBottom: 48
+  },
+  textInput: {
+    height: 40,
+    borderColor: "#000000",
+    borderBottomWidth: 1,
+    marginBottom: 36
+  },
+  btnContainer: {
+    backgroundColor: "white",
+    marginTop: 12
+  }
 });
 
 export default Register;
