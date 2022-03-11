@@ -16,7 +16,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Profile() {
   const [ user, setUser] = useState({});
   const token = useSelector((state) => state.auth.userData.token);
-  
   console.log(token)
 
   const logoutAction = async () => {

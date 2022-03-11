@@ -26,7 +26,7 @@ function Detail({navigation, route}) {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'android');
+    setShow(Platform.OS === 'ios');
     setDate(currentDate);
   };
 
@@ -47,6 +47,7 @@ function Detail({navigation, route}) {
     const newCounter = counter - 1 < 0 ? 0 : counter - 1;
     setCounter(newCounter);
   };
+  const dateNow = new Date();
 
   useEffect(() => {
     const id = route.params.id;
@@ -58,8 +59,6 @@ function Detail({navigation, route}) {
       console.log(err)
     });
   }, []);
-
-  console.log(date, selectedDay, counter)
 
   console.log(route.params.id)
   return (
@@ -121,10 +120,11 @@ function Detail({navigation, route}) {
         <DateTimePicker
         testID="dateTimePicker"
         value={date}
-        mode={mode}
+        mode={'date'}
         is24Hour={true}
         display="default"
         onChange={onChange}
+        minimumDate={dateNow}
         />
         )}
     </View>
@@ -139,7 +139,7 @@ function Detail({navigation, route}) {
     <Picker.Item label="day 4" value="4" />
     <Picker.Item label="day 5" value="5" />
     <Picker.Item label="day 6" value="6" />
-    <Picker.Item label="day7" value="7" />
+    <Picker.Item label="day 7" value="7" />
   </Picker>        
     </View>
 
@@ -153,8 +153,11 @@ function Detail({navigation, route}) {
               const paymentBody ={
                 date : date,
                 day : selectedDay,
-                bikes : counter,
+                bikes : vehicle.name,
+                qty : counter,
                 price : vehicle.price,
+                capacity : vehicle.capacity, 
+                location : vehicle.location,
               }
             navigation.navigate('Payment',{ param, paymentBody})}}>
             <Text style={styles.reserve}>

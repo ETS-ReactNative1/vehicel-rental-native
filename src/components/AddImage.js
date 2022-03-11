@@ -16,6 +16,8 @@ import {
 } from 'react-native-image-picker';
 
 const AddImage = () => {
+  const [image, setImage] = useState();
+  const [imageState, setImageState] = useState();
   const [filePath, setFilePath] = useState({});
 
   const requestCameraPermission = async () => {
@@ -74,7 +76,7 @@ const AddImage = () => {
         console.log('Response = ', response);
         if (response.assets[0].uri) {
             // console.log('BERHASIL', response);
-            setPhoto(response.assets[0]);
+            setPhoto(response.assets[0].uri);
             setImage(response.assets[0].uri);
           }
 
@@ -103,16 +105,17 @@ const AddImage = () => {
     }
   };
 
-//   const options = {
-//     noData: true,
-//     mediaType: 'photo' as const
-//   }
-//   launchImageLibrary(options, (response) => {
-//     if (response.assets) {
-//       const imageAssetsArray = response.assets[0].uri
-//       setImageState(imageAssetsArray)
-//     }
-//   })
+  // const options = {
+  //   noData: true,
+  //   mediaType: 'photo' 
+  //   //as const
+  // }
+  // launchImageLibrary(options, (response) => {
+  //   if (response.assets) {
+  //     const imageAssetsArray = response.assets[0].uri
+  //     setImageState(imageAssetsArray)
+  //   }
+  // })
   const chooseFile = (type) => {
     let options = {
       mediaType: type,
@@ -149,10 +152,11 @@ const AddImage = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <Text style={styles.titleText}>
+    <> 
+    {/* style={{flex: 1}} */}
+      {/* <Text style={styles.titleText}>
         Example of Image Picker in React Native
-      </Text>
+      </Text> */}
       <View style={styles.container}>
         <Image
           source={{
@@ -160,41 +164,34 @@ const AddImage = () => {
           }}
           style={styles.imageStyle}
         />
+        <View style={styles.imgWrapper}>
+       {/* <Image
+        source={require('../assets/default-placeholder.png')}
+        style={styles.imgPlaceholder}
+        /> */}
         <Image
-          source={{uri: filePath.uri}}
-          style={styles.imageStyle}
-        />
+          // source={{uri: filePath.assets[0].uri}  !== null ? {uri: filePath.assets[0].uri} : 'null'}
+          source={{uri: filePath.uri} !== null ? {uri: filePath.uri} : require('../assets/default-placeholder.png')}
+          style={styles.imgPlaceholder}
+          />
         <Text style={styles.textStyle}>{filePath.uri}</Text>
+        </View>
         <TouchableOpacity
           activeOpacity={0.5}
-          style={styles.buttonStyle}
+          style={styles.btnAddPic}
           onPress={() => captureImage('photo')}>
-          <Text style={styles.textStyle}>
-            Launch Camera for Image
+          <Text style={styles.AddPic}>
+            Add Item Launch Camera 
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
-          style={styles.buttonStyle}
-          onPress={() => captureImage('video')}>
-          <Text style={styles.textStyle}>
-            Launch Camera for Video
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.buttonStyle}
+          style={styles.btnAddPic}
           onPress={() => chooseFile('photo')}>
-          <Text style={styles.textStyle}>Choose Image</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.buttonStyle}
-          onPress={() => chooseFile('video')}>
-          <Text style={styles.textStyle}>Choose Video</Text>
+          <Text style={styles.AddPic}>Add Item</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </>
   );
 };
 
@@ -202,8 +199,8 @@ export default AddImage;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    // flex: 1,
+    // padding: 10,
     backgroundColor: '#fff',
     alignItems: 'center',
   },
@@ -211,7 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
-    paddingVertical: 20,
+    // paddingVertical: 20,
   },
   textStyle: {
     padding: 10,
@@ -226,8 +223,38 @@ const styles = StyleSheet.create({
     width: 250,
   },
   imageStyle: {
-    width: 200,
-    height: 200,
-    margin: 5,
+    width: 100,
+    height: 100,
+    // margin: 5,
+  },
+  btnAddPic: {
+    alignItems: 'center',
+    backgroundColor: '#393939',
+    padding: 10,
+    borderRadius: 15,
+    height: 60,
+    textAlign: 'center',
+    width : '60%',
+    // marginLeft: '20%',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  AddPic: {
+    color : '#FFCD61',
+    fontWeight: 'bold',
+    fontSize: 17,
+    lineHeight: 35,
+  },
+  imgPlaceholder:{
+    width : 150,
+    height: 150,
+    borderRadius : 75,
+  },
+  imgWrapper:{
+    width : 150,
+    height: 150,
+    borderRadius : 50,
+    // marginLeft : '5%',
+    // marginTop : 40,
   },
 });

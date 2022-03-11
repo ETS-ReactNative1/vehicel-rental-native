@@ -12,6 +12,7 @@ import Add from './screens/Add';
 import Chat from './screens/Chat';
 import Search from './screens/Search';
 import History from './screens/History';
+import Category from './screens/Category';
 import Detail from './screens/Detail';
 import Payment from './screens/payment/Payment';
 import GetPayment from './screens/payment/GetPayment';
@@ -122,6 +123,7 @@ const Router = () => (
     {/* <Stack.Screen name="HomeAdmin" component={HomeAdmin} /> */}
     <Stack.Screen name="Add" component={Add} />
     <Stack.Screen name="NavBottom" component={NavBottom} />
+    <Stack.Screen name="Category" component={Category} />
     <Stack.Screen name="Detail" component={Detail} />
     <Stack.Screen name="Payment" component={Payment} />
     <Stack.Screen name="GetPayment" component={GetPayment} />

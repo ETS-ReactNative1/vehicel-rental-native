@@ -1,11 +1,18 @@
 import {SafeAreaView,ScrollView, StyleSheet, TextInput, Text, View, TouchableOpacity, Image, TouchableHighlight} from 'react-native';
 import React, {useState} from 'react';
-import AddImage from '../components/AddImage'
+import AddImage from '../components/AddImage';
+import {Picker} from '@react-native-picker/picker';
+import {addVehicle} from '../modules/utils/vehicles';
+import { useSelector } from "react-redux";
 
-export default function Add() {
-  const [text, onChangeText] = useState('');
+export default function Add(props) {
+  const token = useSelector((state) => state.auth.userData.token);
+  console.log(token)
+  const [name, onChangeName] = useState('');
   const [number, onChangeNumber] = useState(null);
   const [counter, setCounter] = useState(1);
+  const [selectedLoc, setSelectedLoc] = useState();
+  const [selectedAddTo, setSelectedAddTo] = useState();
 
   const addCounter = () => {
     const newCounter = counter + 1;
@@ -16,57 +23,35 @@ export default function Add() {
     setCounter(newCounter);
   };
 
-  const [filePath, setFilePath] = useState({});
+//change to form date
 
-  const chooseFile = () => {
-    let options = {
-      title: 'Select Image',
-      customButtons: [
-        {
-          name: 'customOptionKey',
-          title: 'Choose Photo from Custom Option'
-        },
-      ],
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+  const addVehicleHandler = () => {
+    const body = {
+        qty : counter,
+        name : Name,
 
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log(
-          'User tapped custom button: ',
-          response.customButton
-        );
-        alert(response.customButton);
-      } else {
-        let source = response;
-        setFilePath(source);
-      }
+    }
+    console.log(body)
+    addVehicle(token, body)
+    .then((res) => {
+      console.log(res)
+      console.log(res.data)
+    }).catch((err) => {
+      console.log(err)
     });
-  };
+  }
 
   return (
     <ScrollView style={styles.bg}>
-      <TouchableHighlight style={styles.imgWrapper}>
-       <Image
-        source={require('../assets/default-placeholder.png')}
-        style={styles.imgPlaceholder}
-        />
-        </TouchableHighlight>
-      <TouchableOpacity style={styles.btnAddPic} onPress={() => navigation.navigate('Add')}>
+        <AddImage />
+
+      {/* <TouchableOpacity style={styles.btnAddPic} onPress={() => navigation.navigate('Add')}>
             <Text style={styles.AddPic}>Add Item</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
       <TextInput
         style={styles.inputNameProduct}
-        onChangeText={onChangeText}
-        value={text}
+        onChangeText={onChangeName}
+        value={name}
         placeholder="Type product name min. 30 characters"
       />
       <TextInput
@@ -83,25 +68,39 @@ export default function Add() {
           placeholder="Description placeholder"
           // keyboardType="numeric"
         />
-        <View style={styles.locationWrapper}>
+        <View>
         <Text style={styles.menuTitle}>Location</Text>
-        {/* <SelectDropdown 
-          data={days}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item;
-          }}
-        /> */}
-        <AddImage />
-        </View>
         <View style={styles.locationWrapper}>
+        <Picker style={styles.dropdownMenu}
+          selectedValue={selectedLoc}
+          onValueChange={(itemValue, itemIndex) =>
+            setSelectedLoc(itemValue)
+          }>
+           <Picker.Item label="Choose Location" value="Choose Location" />
+          <Picker.Item label="Malang" value="Malang" />
+          <Picker.Item label="Yogyakarta" value="Yogyakarta" />
+          <Picker.Item label="Jakarta" value="Jakarta" />
+          <Picker.Item label="Bali" value="Bali" />
+          <Picker.Item label="+ Add City" value="AddCity" />
+        </Picker>  
+        </View>      
+        </View>
+        <View>
         <Text style={styles.menuTitle}>Add to</Text>
-        {/* dropdowwn */}
+        <View style={styles.locationWrapper}>
+        <Picker style={styles.dropdownMenu}
+          selectedValue={selectedAddTo}
+          onValueChange={(itemValue, itemIndex) =>
+            setSelectedAddTo(itemValue)
+          }>
+          <Picker.Item label="Choose Category" value="Choose Category" />
+          <Picker.Item label="Cars" value="Cars" />
+          <Picker.Item label="Bike" value="Bike" />
+          <Picker.Item label="MotorBike" value="MotorBike" />
+          <Picker.Item label="HomePage (Popular)" value="Popular" />
+          <Picker.Item label="+ Add Category" value="AddCategory" />
+        </Picker>  
+        </View> 
         </View>
         <View style={styles.counterWrapper}>
         <Text style={styles.menuTitle}>Stock :</Text>
@@ -207,5 +206,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
     lineHeight: 35,
+  },
+  locationWrapper:{
+    width: 325,
+    marginLeft : 30,
+    borderWidth : 1,
+    borderColor: '#393939',
+    borderRadius : 15,
   },
 });

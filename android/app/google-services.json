@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "848242373987",
+    "project_id": "vehiclerental-30197",
+    "storage_bucket": "vehiclerental-30197.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848242373987:android:ae9b6dc7376c360bcc4f56",
+        "android_client_info": {
+          "package_name": "com.nativevehicleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848242373987-ju6pf7f01bfpiq7djuogvot5qgc5bjpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBb5Q2i-H5LyMfV8uWMQo5c8kyATtf008"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848242373987-ju6pf7f01bfpiq7djuogvot5qgc5bjpj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -58,6 +58,7 @@ const Login = props => {
             style={styles.input}
             onChangeText={text => setPassword(text)}
             // value={password}
+            secureTextEntry={true}
             placeholder="password"
           />
           <TouchableOpacity

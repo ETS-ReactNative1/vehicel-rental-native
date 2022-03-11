@@ -106,8 +106,10 @@ export default function Payment({navigation, route}) {
           id: vehicle.id,
         };
         const body= {
+          id : user.id,
           name : user.name,
           email : user.email_address,
+          phone : user.mobile_number,
         };
         const payType ={
           paymentType: selectedType,

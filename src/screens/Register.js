@@ -63,6 +63,7 @@ function Register({navigation}) {
             style={styles.input}
             onChangeText={text => setPassword(text)}
             // value={password}
+            secureTextEntry={true}
             placeholder="password"
           />
 

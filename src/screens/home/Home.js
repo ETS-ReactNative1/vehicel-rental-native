@@ -101,6 +101,8 @@ export default function Home({navigation}) {
           style={styles.loading}
         />
       )}
+
+      
       <View style={styles.imageWrapper}>
         <Text style={styles.title}>Motorbike</Text>
         <Text
