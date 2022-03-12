@@ -9,33 +9,40 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import { useSelector } from "react-redux";
-import {getUsers} from "../../modules/utils/users";
+import {useSelector, useDispatch} from 'react-redux';
+import {getUsers} from '../../modules/utils/users';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {logoutAction} from '../../store/actions/auth';
+import {logoutAuth} from '../../modules/utils/auth';
 
-export default function Profile() {
-  const [ user, setUser] = useState({});
-  const token = useSelector((state) => state.auth.userData.token);
-  console.log(token)
-
-  const logoutAction = async () => {
-    try {
-        await AsyncStorage.removeItem('token');
-        // setFoundToken('');
-    } catch (error) {
-        console.log(error);
-    }
-  }
+export default function Profile({navigation}) {
+  const [user, setUser] = useState({});
+  const token = useSelector(state => state.auth.userData.token);
+  // console.log(token);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getUsers(token)
-    .then((res) => {
-      setUser({...res.data.result[0]})
-      console.log(res)
-    }).catch((err) => {
-      console.log(err)
-    });
+      .then(res => {
+        setUser({...res.data.result[0]});
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, []);
+
+  const onLogout = () => {
+    // console.log('token', token);
+    logoutAuth(token)
+      .then(res => {
+        dispatch(logoutAction());
+        navigation.navigate('Login');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   return (
     <ScrollView style={styles.bg}>
@@ -47,12 +54,16 @@ export default function Profile() {
         <Text style={styles.menu}>Your Favourites</Text>
         <Text style={styles.menu}>FAQ</Text>
         <Text style={styles.menu}>Help</Text>
+        <TouchableOpacity onPress={()=>navigation.navigate('EditProfile')}>
         <Text style={styles.menu}>Update Profile</Text>
+        </TouchableOpacity>
       </View>
 
       <View>
         <TouchableOpacity style={styles.btnLgt}>
-          <Text style={styles.logout} onPress={logoutAction}>Logout</Text>
+          <Text style={styles.logout} onPress={onLogout}>
+            Logout
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

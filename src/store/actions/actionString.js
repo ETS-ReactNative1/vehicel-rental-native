@@ -3,7 +3,8 @@ export const ACTION_STRING = {
   deleteHistory: 'DELETE_HISTORY',
   dataPayment: 'PAYMENT_DATA',
   userLogin: 'USER_LOGIN',
-  authLogout: 'AUTH_LOGOUT',
+  logoutAuth: 'LOGOUT_AUTH',
+
   pending: '_PENDING',
   fulfilled: '_FULFILLED',
   rejected: '_REJECTED',

@@ -13,3 +13,12 @@ const URLregister = 'https://arka-vehicle-rental.herokuapp.com/auth/signUp';
 export const registerAuth = body => {
   return axios.post(URLregister, body);
 };
+
+export const logoutAuth = token => {
+  const URLlogout = 'https://arka-vehicle-rental.herokuapp.com/auth/logout';
+  return axios.delete(URLlogout, {
+    headers: {
+      'x-access-token': token,
+    },
+  });
+};

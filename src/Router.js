@@ -19,6 +19,7 @@ import GetPayment from './screens/payment/GetPayment';
 import FinishPayment from './screens/payment/FinishPayment';
 import Success from './screens/payment/Success';
 import Profile from './screens/profile/Profile';
+import EditProfile from './screens/profile/EditProfile';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -120,6 +121,7 @@ const Router = () => (
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="ForgotPassword" component={Forgot} />
+    <Stack.Screen name="EditProfile" component={EditProfile} />
     {/* <Stack.Screen name="HomeAdmin" component={HomeAdmin} /> */}
     <Stack.Screen name="Add" component={Add} />
     <Stack.Screen name="NavBottom" component={NavBottom} />

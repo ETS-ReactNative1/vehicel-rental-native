@@ -1,6 +1,7 @@
 import {SafeAreaView,ScrollView, StyleSheet, TextInput, Text, View, TouchableOpacity, Image, TouchableHighlight} from 'react-native';
 import React, {useState} from 'react';
-import AddImage from '../components/AddImage';
+// import AddImage from '../components/AddImage';
+import HandleImage from '../components/HandleImage';
 import {Picker} from '@react-native-picker/picker';
 import {addVehicle} from '../modules/utils/vehicles';
 import { useSelector } from "react-redux";
@@ -23,8 +24,6 @@ export default function Add(props) {
     setCounter(newCounter);
   };
 
-//change to form date
-
   const addVehicleHandler = () => {
     const body = {
         qty : counter,
@@ -35,6 +34,7 @@ export default function Add(props) {
     addVehicle(token, body)
     .then((res) => {
       console.log(res)
+      console.log(res.json())
       console.log(res.data)
     }).catch((err) => {
       console.log(err)
@@ -43,11 +43,7 @@ export default function Add(props) {
 
   return (
     <ScrollView style={styles.bg}>
-        <AddImage />
-
-      {/* <TouchableOpacity style={styles.btnAddPic} onPress={() => navigation.navigate('Add')}>
-            <Text style={styles.AddPic}>Add Item</Text>
-          </TouchableOpacity> */}
+        <HandleImage />
       <TextInput
         style={styles.inputNameProduct}
         onChangeText={onChangeName}
@@ -164,6 +160,8 @@ const styles = StyleSheet.create({
   },
   counterWrapper:{
     flexDirection: 'row',
+    width : 385,
+    marginTop : 20,
   },
   btnCounterWrapper:{
     marginLeft : '40%',
@@ -208,7 +206,7 @@ const styles = StyleSheet.create({
     lineHeight: 35,
   },
   locationWrapper:{
-    width: 325,
+    width: 335,
     marginLeft : 30,
     borderWidth : 1,
     borderColor: '#393939',

@@ -22,7 +22,7 @@ export const getVehicle = (id) => {
   return axios.get(URL + id)
 }
 
-const AddURL = `https://arka-vehicle-rental.herokuapp.com//history` ;
+const AddURL = `https://arka-vehicle-rental.herokuapp.com/vehicles` ;
 export const addVehicle = (token, body) => {
   return axios.post(AddURL, body,  {
     headers: {'x-access-token': token} 
