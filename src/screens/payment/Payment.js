@@ -57,36 +57,42 @@ export default function Payment({navigation, route}) {
         <TextInput
          style={styles.inputNameProduct}
           placeholder="ID Card Number"
+          placeholderTextColor='#323232'
         />
       </View>  
       <View>
         <TextInput
          style={styles.inputNameProduct}
           placeholder= {user.name !== null ? user.name : "Name"}
+          placeholderTextColor='#323232'
         />
       </View>  
       <View>
         <TextInput
          style={styles.inputNameProduct}
           placeholder= {user.username !== null ? user.username : "Last Name"}
+          placeholderTextColor='#323232'
         />
       </View>  
       <View>
         <TextInput
          style={styles.inputNameProduct}
           placeholder= {user.mobile_number !== null ? user.mobile_number : "Mobile phone"}
+          placeholderTextColor='#323232'
         />
       </View>  
       <View>
         <TextInput
          style={styles.inputNameProduct}
           placeholder={user.email_address !== null ? user.email_address  : "Email Address" }
+          placeholderTextColor='#323232'
         />
       </View> 
       <View>
         <TextInput
          style={styles.inputNameProduct}
          placeholder={user.address !== null ? user.address  : "Location" }
+         placeholderTextColor='#323232'
         />
       </View>  
       <View style={styles.inputNameProduct}>

@@ -36,7 +36,7 @@ export default function Category() {
       <View style={styles.imageWrapper}>
         <Text style={styles.title}>Cars</Text>
       </View>
-      {/* {vehicle.length > 0 && isLoading ? (
+      {vehicle.length > 0 && isLoading ? (
         <FlatList
           data={vehicle}
           horizontal={true}
@@ -63,7 +63,7 @@ export default function Category() {
           source={require('../assets/loadingimg.gif')}
           style={styles.loading}
         />
-      )} */}
+      )}
 
     </View>
  </ScrollView>

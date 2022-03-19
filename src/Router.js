@@ -1,8 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Image} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+import SplashScreen from 'react-native-splash-screen';
 
 import Login from './screens/Login';
 import Register from './screens/Register';
@@ -12,7 +14,7 @@ import Add from './screens/Add';
 import Chat from './screens/Chat';
 import Search from './screens/Search';
 import History from './screens/History';
-import Category from './screens/Category';
+import DetailsCategory from './screens/DetailsCategory';
 import Detail from './screens/Detail';
 import Payment from './screens/payment/Payment';
 import GetPayment from './screens/payment/GetPayment';
@@ -20,6 +22,8 @@ import FinishPayment from './screens/payment/FinishPayment';
 import Success from './screens/payment/Success';
 import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
+import FilterProduct from './screens/FilterProduct';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,6 +61,26 @@ const NavBottom = () => (
           <View>
             <Image
               source={require('./assets/history.png')}
+              resizeMode="cover"
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: focused && '#ffcd61',
+              }}
+            />
+          </View>
+        ),
+        tabBarActiveBackgroundColor: '#f5f5f5',
+      }}
+    />
+       <Tab.Screen
+      name="Search"
+      component={Search}
+      options={{
+        tabBarIcon: ({focused}) => (
+          <View>
+            <Image
+              source={require('./assets/Search2.png')}
               resizeMode="cover"
               style={{
                 width: 25,
@@ -113,7 +137,12 @@ const NavBottom = () => (
   </Tab.Navigator>
 );
 
-const Router = () => (
+const Router = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, [])
+  
+  return (
   <Stack.Navigator
     screenOptions={{
       headerShown: false,
@@ -125,13 +154,14 @@ const Router = () => (
     {/* <Stack.Screen name="HomeAdmin" component={HomeAdmin} /> */}
     <Stack.Screen name="Add" component={Add} />
     <Stack.Screen name="NavBottom" component={NavBottom} />
-    <Stack.Screen name="Category" component={Category} />
+    <Stack.Screen name="DetailsCategory" component={DetailsCategory} />
     <Stack.Screen name="Detail" component={Detail} />
     <Stack.Screen name="Payment" component={Payment} />
     <Stack.Screen name="GetPayment" component={GetPayment} />
     <Stack.Screen name="FinishPayment" component={FinishPayment} />
     <Stack.Screen name="Success" component={Success} />
+    <Stack.Screen name="FilterProduct" component={FilterProduct} />
   </Stack.Navigator>
 );
-
+}
 export default Router;

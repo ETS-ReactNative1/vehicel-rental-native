@@ -22,6 +22,7 @@ export default function Home({navigation}) {
   const [motorbikes, setMotorbikes] = useState([]);
   const [bikes, setBikes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pic, setPic] = useState(null);
 
   const getVehicleType = () => {
     getAllVehicle()
@@ -31,16 +32,24 @@ export default function Home({navigation}) {
           setCars(res[0].data.result.data);
           setMotorbikes(res[1].data.result.data);
           setBikes(res[2].data.result.data);
-          console.log(res);
+          // console.log('home v : ',res)
+          // console.log('img res home :  ',res[0].data.result.data[0].images);
+          // const vImg = res[0].data.result.data[0].images;
+          // console.log(vImg)
+          
+          setPic(res[0].data.result.data[0].images);
         }),
-      )
-      .catch(err => console.log(err));
-  };
-
-  useEffect(() => {
-    getVehicleType();
-  }, []);
-
+        )
+        .catch(err => console.log(err));
+      };
+      
+      useEffect(() => {
+        getVehicleType();
+      }, []);
+      
+      // console.log('home v bikwe : ', bikes);
+      console.log('pic: ',pic, process.env.API_URL);
+      const picVehicle = {uri : `${process.env.API_URL}/${pic}`};
   return (
     <ScrollView style={styles.bg}>
       <View style={styles.search}>
@@ -60,15 +69,16 @@ export default function Home({navigation}) {
         )}
       </ImageBackground>
       </View>
+
       <View style={styles.imageWrapper}>
-        <Text style={styles.title}>Cars</Text>
+        <Text style={styles.title}>Car</Text>
         <Text
           style={styles.more}
           onPress={() => {
             const param = {
-              type: 'Cars',
+              type: 'car',
             };
-            navigation.navigate('Category', param);
+            navigation.navigate('DetailsCategory', param);
           }}>
           View More >
         </Text>
@@ -78,18 +88,27 @@ export default function Home({navigation}) {
           data={cars}
           horizontal={true}
           renderItem={({item: vehicles}) => {
+            let linkpic = JSON.parse(vehicles.images)[0];
+            // console.log('car img fl :',vehicles.images, vehicles.id);
+             const picVehicle = {uri : `${process.env.API_URL}/${linkpic}`};
             return (
               <TouchableOpacity
                 onPress={() => {
                   const param = {
                     id: vehicles.id,
+                    image : vehicles.images,
                   };
                   navigation.navigate('Detail', param);
                 }}>
-                <Image
-                  source={require('../../assets/default-placeholder.png')}
+                  {/* <Image source={{uri : `${process.env.API_URL}/${pic[0]}`}} style={styles.card} />  */}
+                 {pic !== null ? 
+                <Image source={picVehicle}  style={styles.card} />
+                : <Image source={require('../../assets/default-placeholder.png')}
+                style={styles.card} /> }
+                {/* <Image
+                  source={ require('../../assets/default-placeholder.png')}
                   style={styles.card}
-                />
+                /> */}
               </TouchableOpacity>
             );
           }}
@@ -109,30 +128,34 @@ export default function Home({navigation}) {
           style={styles.more}
           onPress={() => {
             const param = {
-              type: 'Cars',
+              type: 'motorbike',
             };
-            navigation.navigate('Category', param);
+            navigation.navigate('DetailsCategory', param);
           }}>
           View More >
         </Text>
       </View>
-      {cars.length > 0 && isLoading ? (
-        <FlatList
-          data={cars}
+      {motorbikes.length > 0 && isLoading ? (
+        <FlatList 
+          data={motorbikes}
           horizontal={true}
           renderItem={({item: vehicles}) => {
+            let linkpic = JSON.parse(vehicles.images)[0];
+            // console.log('car img fl :',vehicles.images, vehicles.id);
+             const picVehicle = {uri : `${process.env.API_URL}/${linkpic}`};
             return (
               <TouchableOpacity
                 onPress={() => {
                   const param = {
                     id: vehicles.id,
+                    image : vehicles.images,
                   };
                   navigation.navigate('Detail', param);
                 }}>
-                <Image
-                  source={require('../../assets/default-placeholder.png')}
-                  style={styles.card}
-                />
+                 {pic !== null ? 
+                <Image source={picVehicle}  style={styles.card} />
+                : <Image source={require('../../assets/default-placeholder.png')}
+                style={styles.card} /> }
               </TouchableOpacity>
             );
           }}
@@ -150,30 +173,34 @@ export default function Home({navigation}) {
           style={styles.more}
           onPress={() => {
             const param = {
-              type: 'Cars',
+              type: 'bike',
             };
-            navigation.navigate('Category', param);
+            navigation.navigate('DetailsCategory', param);
           }}>
           View More >
         </Text>
       </View>
-      {cars.length > 0 && isLoading ? (
+      {bikes.length > 0 && isLoading ? (
         <FlatList
-          data={cars}
+          data={bikes}
           horizontal={true}
           renderItem={({item: vehicles}) => {
+            let linkpic = JSON.parse(vehicles.images)[0];
+            // console.log('car img fl :',vehicles.images, vehicles.id);
+             const picVehicle = {uri : `${process.env.API_URL}/${linkpic}`};
             return (
               <TouchableOpacity
                 onPress={() => {
                   const param = {
                     id: vehicles.id,
+                    image : vehicles.images,
                   };
                   navigation.navigate('Detail', param);
                 }}>
-                <Image
-                  source={require('../../assets/default-placeholder.png')}
-                  style={styles.card}
-                />
+                 {pic !== null ? 
+                <Image source={picVehicle}  style={styles.card} />
+                : <Image source={require('../../assets/default-placeholder.png')}
+                style={styles.card} /> }
               </TouchableOpacity>
             );
           }}

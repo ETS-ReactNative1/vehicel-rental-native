@@ -5,7 +5,8 @@ import {
   View,
   SafeAreaView,
   TextInput,
-  TouchableOpacity, KeyboardAvoidingView,TouchableWithoutFeedback, Keyboard
+  ToastAndroid,
+  TouchableOpacity, KeyboardAvoidingView,TouchableWithoutFeedback, Keyboard, 
 } from 'react-native';
 import React, {useState} from 'react';
 import {registerAuth} from '../../src/modules/utils/auth';
@@ -14,6 +15,13 @@ function Register({navigation}) {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const showToastWithGravity = () => {
+    ToastAndroid.showWithGravity(
+      "Register Success",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+  };
 
   const registerUser = async () => {
     try {
@@ -28,6 +36,7 @@ function Register({navigation}) {
       // console.log(result.data);
       if (result.data.result) {
         console.log(result);
+        showToastWithGravity();
         navigation.navigate('Login');
       }
     } catch (err) {
