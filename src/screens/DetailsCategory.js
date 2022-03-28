@@ -22,39 +22,37 @@ export default function DetailsCategory({navigation, route}) {
 
   const getVehicle = () => {
     const type = route.params.type;
-    getVehicleCategory(type)
+    getVehicleCategory(type) //current page
       .then(res => {
         setIsLoading(true);
         // setVehicle([...vehicle, ...res.data.result.data]);
         setVehicle(res.data.result.data)
-        // console.log(res)
+        // console.log('meta the virgin : ',res.data.result.data)
+        console.log(res)
         // setPic(res.data.result.data.images);
+        // INFINTE SCROLL
+        // setIsNext(true);
+        //       setIsLoading(false);
+        //       if (res.data.result.meta.next === null) {
+        //         setIsNext(false);
+        //         setIsLoading(false);
+        //       }
       })
       .catch(err => console.log(err));
   };
-
-  // console.log('pic: ',pic, process.env.API_URL);
-  // const picVehicle = {uri : `${process.env.API_URL}/${pic}`};
-
-  // getVehicleType(type, currentPage)
-  //     .then(res => {
-  //       console.log('cek vehicle', res.data.result.data);
-  //       // console.log('cek meta', res.data.result.meta.next);
-  //       // console.log('cekcek', res.data.result.data);
-  //       setIsSuccess(true);
-  //       setVehicle([...vehicle, ...res.data.result.data]);
-  //       setIsNext(true);
-  //       setIsLoading(false);
-  //       if (res.data.result.meta.next === null) {
-  //         setIsNext(false);
-  //         setIsLoading(false);
-  //       }
-  //     })
 
   useEffect(() => {
     getVehicle();
   }, []);
   return (
+    <>
+    <TouchableOpacity onPress={()=>navigation.goBack()}>
+      <View style={styles.backBtn}>
+      <Image source={require('../assets/back-arrow.png')} style={styles.backBtnImg}/>
+      <Text style={styles.backBtnTxt}>{route.params.type}</Text>
+      </View>
+    </TouchableOpacity>
+
     <ScrollView style={styles.bg}>
     {/* <View style={styles.imageWrapper}> */}
         {/* <Text style={styles.title}>test</Text> */}
@@ -107,11 +105,28 @@ export default function DetailsCategory({navigation, route}) {
 
       
   </ScrollView>
+  </>
   )
 }
 
 
 const styles = StyleSheet.create({
+  backBtn:{
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingTop : 20,
+    marginLeft : 20,
+  },
+  backBtnImg:{
+    width : 40,
+    height : 40,
+  },
+  backBtnTxt:{
+    color : 'black',
+    fontWeight : 'bold',
+    fontSize : 20,
+    lineHeight : 37,
+  },
   bg:{
     backgroundColor : '#fff',
   },

@@ -1,15 +1,11 @@
 import axios from 'axios';
 
-// const URL = process.env.NEXT_PUBLIC_API_URL + '/signIn';
-const URL = `${process.env.API_URL}/auth/signIn`;
-
+const URL = `${process.env.API_URL}/auth/login`;
 export const loginAuth = body => {
   return axios.post(URL, body);
 };
 
-// const URLregister = process.env.API_URL + '/auth/SignUp';
-const URLregister = `${process.env.API_URL}/auth/signUp`;
-
+const URLregister = `${process.env.API_URL}/auth/register`;
 export const registerAuth = body => {
   return axios.post(URLregister, body);
 };

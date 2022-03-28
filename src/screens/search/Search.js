@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet, FlatList, ScrollView,
   Image,  TouchableOpacity, SafeAreaView} from 'react-native'
 import React, {useState, useRef, useEffect} from 'react'
-import {getVehicleCategory} from '../modules/utils/vehicles';
+import {getVehicleCategory, getVehicles} from '../../modules/utils/vehicles';
 
 // const data = [
 //   {id : 1, name : 'ipul'},
@@ -28,19 +28,20 @@ export default function Search({navigation}) {
     // const type = route.params.type;
     let type = "";
     let limit = 10;
-    getVehicleCategory(type, limit)
+    getVehicles(type, limit)
       .then((res, data) => {
         setIsLoading(true);
+        console.log('get Vehicles : ', res.data.result)
+        setVehicle(res.data.result)
         // setVehicle([...vehicle, ...res.data.result.data]);
-        console.log('data search : ' , data)
-        console.log('data search 2: ' , res.data.result.data)
-        setVehicle(res.data.result.data)
+        // console.log('data search : ' , data)
+        // console.log('data search 2: ' , res.data.result)
         // console.log(res)
         // setPic(res.data.result.data.images);
       })
       .catch(err => console.log(err));
   };
-
+  
   // console.log('pic: ',pic, process.env.API_URL);
   // const picVehicle = {uri : `${process.env.API_URL}/${pic}`};
 
@@ -62,6 +63,8 @@ export default function Search({navigation}) {
   useEffect(() => {
     getVehicle();
   }, []);
+
+  console.log('searh base : ',vehicle)
 
   const searchFilterData = text 
   ? vehicle.filter(item=>{
@@ -121,21 +124,29 @@ export default function Search({navigation}) {
     //   keyExtractor={(item, index)=> index.toString()}
     //   />
     // </View>
+    <>
+    <TouchableOpacity onPress={()=>navigation.goBack()}>
+      <View style={styles.backBtn}>
+      <Image source={require('../../assets/back-arrow.png')} style={styles.backBtnImg}/>
+      <Text style={styles.backBtnTxt}>Back</Text>
+      </View>
+    </TouchableOpacity>
 
     <SafeAreaView style={styles.bg}>
       {isLoading === true ? (
       <View>
         <View style={styles.MainContainer}>
           <TextInput
-            style={styles.textInput}
+            style={styles.inputSearchBar}
             onChangeText={text => setText(text)}
             value={text}
-            underlineColorAndroid="transparent"
+            // underlineColorAndroid="transparent"
             placeholder="Search Here"
+            placeholderTextColor ='white'
           />
             <View>
            <TouchableOpacity style={styles.btnAdd} onPress={()=> navigation.navigate('FilterProduct')}>
-             <Image source={require('../assets/filter-icon.png')} style={styles.filterIcon} /> 
+             <Image source={require('../../assets/filter-icon.png')} style={styles.filterIcon} /> 
               <Text style={styles.AddBtn}>Filter</Text>
           </TouchableOpacity> 
               </View>
@@ -162,7 +173,7 @@ export default function Search({navigation}) {
                   }}>
                    {linkpic !== null ? 
                   <Image source={picVehicle}  style={styles.imageWrapper} />
-                  : <Image source={require('../assets/default-placeholder.png')}
+                  : <Image source={require('../../assets/default-placeholder.png')}
                   style={styles.imageWrapper} /> }
                 </TouchableOpacity>
                   </View>
@@ -184,18 +195,34 @@ export default function Search({navigation}) {
     </View>
      ) : (
       <Image
-        source={require('../assets/loadingimg.gif')}
+        source={require('../../assets/loadingimg.gif')}
         style={styles.loading}
       />
       )}
     </SafeAreaView>
 
-     
+    </>
   )
 }
 
 
 const styles = StyleSheet.create({
+  backBtn:{
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingTop : 20,
+    marginLeft : 20,
+  },
+  backBtnImg:{
+    width : 40,
+    height : 40,
+  },
+  backBtnTxt:{
+    color : 'black',
+    fontWeight : 'bold',
+    fontSize : 20,
+    lineHeight : 37,
+  },
   bg:{
     backgroundColor : '#fff',
   },
@@ -300,7 +327,25 @@ const styles = StyleSheet.create({
     width : 25,
     height: 25,
     marginRight: 20,
-  }      
+  },
+  inputSearchBar: {
+    height: 60,
+    // margin: 12,
+    borderWidth: 0,
+    padding: 10,
+    borderRadius: 15,
+    backgroundColor: '#393939',
+    color : 'white',
+    // placeholderTextColor : '#fff',
+    // placeholderTextColor : '#ffffff',
+    opacity : .3,
+    width : '80%',
+    marginLeft: '8%',
+    marginBottom: 12,
+    marginTop: 32,
+    fontSize: 17,
+    // fontWeight : 'bold',
+  },      
   })
   
 

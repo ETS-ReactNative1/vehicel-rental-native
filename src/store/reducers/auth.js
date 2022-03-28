@@ -26,16 +26,16 @@ const authReducer = (prevState = initialState, action) => {
         isFulfilled: false,
         isRejected: false,
       };
-
+      
     // case authLogin + fulfilled:
     case authLogin.concat('_', Fulfilled):
       const data = action.payload.data;
-      console.log(data)
+      console.log(data);
       const userData = {
         ...prevState.userData,
-        token: data.result.token,
-      id: data.result.payload.id,
-      role: data.result.payload.role,
+        token: data.result.data.token,
+        id: data.result.data.id,
+        role: data.result.data.role,
       };
       return {
         ...prevState,
@@ -47,7 +47,7 @@ const authReducer = (prevState = initialState, action) => {
     // case authLogin + rejected:
     case authLogin.concat('_', Rejected):
       const err = action.payload;
-      console.log(err.response)
+      console.log(err.response);
       return {
         ...prevState,
         isPending: false,

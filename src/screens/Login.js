@@ -18,7 +18,7 @@ const Login = props => {
   const token = useSelector(state => state.auth.userData.token);
 
   // const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
 
   const [data, setData] = useState({
     email: '',
@@ -47,7 +47,7 @@ const Login = props => {
     }
   };
 
-//  {/* // (!fields["name"].match(/^[a-zA-Z]+$/))*/}
+  //  {/* // (!fields["name"].match(/^[a-zA-Z]+$/))*/}
   const handleValidUser = val => {
     if (val.trim().length >= 4) {
       setData({
@@ -116,7 +116,7 @@ const Login = props => {
   const navigation = props.navigation;
   const loginHandler = () => {
     const body = {
-      email_address: data.email,
+      email: data.email,
       password: data.password,
     };
     dispatch(loginAction(body));
@@ -157,6 +157,7 @@ const Login = props => {
             <TextInput
               style={styles.input}
               placeholder="Email"
+              placeholderTextColor='black'
               name="email"
               value={data.email}
               autoCapitalize="none"
@@ -187,7 +188,7 @@ const Login = props => {
               // value={password}
               // onChangeText={handleChange('password', setPassword('password'))}
               // onBlur={handleBlur('password')}
-              // placeholderTextColor='black'
+              placeholderTextColor='black'
             />
             {data.isValidPassword ? null : (
               <Text style={styles.errorMsg}>
@@ -257,7 +258,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
     flex: 2,
-    // marginTop:
   },
   button: {
     alignItems: 'center',
@@ -307,8 +307,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     width: 300,
-    // color: '#FF0000',
-    // fontSize: 14,
   },
 });
 

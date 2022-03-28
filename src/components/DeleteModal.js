@@ -4,7 +4,7 @@ import { Checkbox } from 'react-native-paper';
 
 export default function DeleteModal(props) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [checked, setChecked] = React.useState([]);
+  const [checked, setChecked] = React.useState();
   const [open, setOpen] = useState(false);
 
   // let {param} = route.params;
@@ -13,7 +13,7 @@ export default function DeleteModal(props) {
   // let a = setDeleteId;
   // console.log(idx, a);
 
-  console.log(props.deleteId, props.setDeleteId);
+  console.log(checked);
 
   return (
     <View style={styles.centeredView}>
@@ -59,8 +59,8 @@ export default function DeleteModal(props) {
                 // const param = {
                 //   id: historys.id,
                 // };
-                // // navigation.navigate(param)
-                // console.log('id delete',param.id)
+                // navigation.navigate(param)
+                console.log('id delete',props.id)
                 setChecked(!checked)
                 setModalVisible(!modalVisible)
                 // setModalV(true)

@@ -21,7 +21,7 @@ export default function Profile({navigation}) {
   const [userImg, setUserImg] = useState();
 
   const token = useSelector(state => state.auth.userData.token);
-  // console.log(token);
+  console.log(token);
   const [modalVisible, setModalVisible] = useState(false);
 
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ export default function Profile({navigation}) {
     logoutAuth(token)
       .then(res => {
         dispatch(logoutAction());
-        navigation.navigate('Login');
+        navigation.navigate('Home');
       })
       .catch(err => {
         console.log(err);

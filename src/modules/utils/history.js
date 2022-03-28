@@ -6,5 +6,6 @@ export const getHistory = (id) => {
 }
 
 export const delHistory = (id) => {
-  return axios.delete(URL + id)
+  // const URLDelete = `${process.env.API_URL}/history/${id}` ;
+  return axios.delete(URL+id)
 }

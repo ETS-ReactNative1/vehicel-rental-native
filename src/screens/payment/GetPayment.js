@@ -35,6 +35,10 @@ export default function GetPayment({navigation, route}) {
 //usage: getRandomString(20);
 
   return (
+    <>
+      <TouchableOpacity onPress={()=>navigation.goBack()}>
+      <Text>Back</Text>
+    </TouchableOpacity>
     <ScrollView style={styles.bg}>
       <View>
         <Image
@@ -72,6 +76,7 @@ export default function GetPayment({navigation, route}) {
         <Text style={styles.payBtn}>Finish Payment</Text>
       </TouchableOpacity>
     </ScrollView>
+    </>
   );
 }
 

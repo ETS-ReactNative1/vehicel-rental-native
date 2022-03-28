@@ -35,7 +35,7 @@ export default function Home({navigation}) {
           // console.log('home v : ',res)
           // console.log('img res home :  ',res[0].data.result.data[0].images);
           // const vImg = res[0].data.result.data[0].images;
-          // console.log(vImg)
+          console.log(res)
           
           setPic(res[0].data.result.data[0].images);
         }),

@@ -7,18 +7,30 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  PermissionsAndroid,
+  Alert,
+  Modal,
+  Pressable,
+  ToastAndroid,
 } from 'react-native';
 import {Button} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {getVehicle, updateVehicle} from '../modules/utils/vehicles';
+import {getVehicle} from '../modules/utils/vehicles';
 import {useSelector} from 'react-redux';
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+import RNFetchBlob from 'rn-fetch-blob';
 
 function Detail({navigation, route}) {
   const role = useSelector(state => state.auth.userData.role);
   const token = useSelector(state => state.auth.userData.token);
 
-  const [name, onChangeName] = useState(null);
+  const [setName, onChangeName] = useState(null);
+  const [setPrice, onChangePrice] = useState();
+  const [countUp, setupCounter] = useState({counter});
+
+
+  const [filePath, setFilePath] = useState({});
 
   const [counter, setCounter] = useState(1);
   const [vehicle, setVehicle] = useState([]);
@@ -32,7 +44,25 @@ function Detail({navigation, route}) {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const [images, setImages] = useState('');
+  const [images, setImages] = useState(null);
+  
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const successToast = () => {
+    ToastAndroid.showWithGravity(
+      'Updated Success',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
+  const failedToast = () => {
+    ToastAndroid.showWithGravity(
+      'Updated Failed',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -71,6 +101,99 @@ function Detail({navigation, route}) {
       });
   }, []);
 
+
+  
+  let img = JSON.parse(route.params.image)[0];
+  // console.log('detail img : ', img)
+  let pic = {uri: `${process.env.API_URL}/${img}`};
+
+  // let imgs = img.map(function(imgDisplay){
+  //   return (<Image source={ {uri : `${process.env.API_URL}/${imgDisplay}`}} />)
+  // })
+
+  // image
+
+  // launch img
+  const requestCameraPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'Camera Permission',
+            message: 'App needs camera permission',
+          },
+        );
+        // If CAMERA Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        return false;
+      }
+    } else return true;
+  };
+
+  const requestExternalWritePermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'External Storage Write Permission',
+            message: 'App needs write permission',
+          },
+        );
+        // If WRITE_EXTERNAL_STORAGE Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        alert('Write permission err', err);
+      }
+      return false;
+    } else return true;
+  };
+
+  const captureImage = async type => {
+    let options = {
+      mediaType: type,
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
+      videoQuality: 'low',
+      durationLimit: 30, //Video max duration in seconds
+      saveToPhotos: true,
+    };
+    let isCameraPermitted = await requestCameraPermission();
+    let isStoragePermitted = await requestExternalWritePermission();
+    if (isCameraPermitted && isStoragePermitted) {
+      launchCamera(options, response => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          alert('User cancelled camera picker');
+          return;
+        } else if (response.errorCode == 'camera_unavailable') {
+          alert('Camera not available on device');
+          return;
+        } else if (response.errorCode == 'permission') {
+          alert('Permission not satisfied');
+          return;
+        } else if (response.errorCode == 'others') {
+          alert(response.errorMessage);
+          return;
+        }
+        console.log('base64 -> ', response.base64);
+        console.log('uri -> ', response.uri);
+        console.log('width -> ', response.width);
+        console.log('height -> ', response.height);
+        console.log('fileSize -> ', response.fileSize);
+        console.log('type -> ', response.type);
+        console.log('fileName -> ', response.fileName);
+        setFilePath(response);
+      });
+    }
+  };
+  // end of launch img
   const handleChoosePhoto = () => {
     launchImageLibrary({noData: true}, response => {
       // console.log('hadleChoosePhoto : ', response.assets[0]);
@@ -79,61 +202,101 @@ function Detail({navigation, route}) {
       }
       if (response) {
         setImages(response.assets[0]);
+        console.log(images)
       }
     });
   };
 
-  const handleUpdate = () => {
+  // console.log(name, price,counter, images)
+
+  const handleUpdateVehicle = () => {
     let id = route.params.id;
-    let data = [];
-    if (images)
-      RNFetchBlob.fetch(
-        'PATCH',
-        `${process.env.API_URL}/vehicles/${id}`,
-        {
+    // let data = [];
+     if (images)
+         RNFetchBlob.fetch(
+        'PATCH',`${process.env.API_URL}/vehicles/${id}`, {
           'x-access-token': token,
-          Accept: 'application/json',
+          Accept : 'application/json',
           'Content-Type': 'multipart/form-data',
         },
         [
           {
-            name: 'image',
-            type: images.type,
-            filename: images.fileName,
-            data: RNFetchBlob.wrap(images.uri),
-            // uri: Platform.OS === 'android' ? images.uri.replace('file://', '') : images.uri,
+            name : 'images',
+            type : images.type,
+            filename : images.fileName,
+            data : RNFetchBlob.wrap(images.uri),
           },
-          // if()
-          {name: 'name', data: name},
-          {name: 'qty', data: counter},
-          {name: 'status', data: selectedStatus},
-        ],
-      )
+          {name : 'name', data : setName},
+          {name : 'price', data : setPrice},
+          {name : 'qty', data : countUp}, 
+          {name : 'status', data : selectedStatus},
+        ])
         .then(response => {
+          successToast();
           console.log('response', response);
+          setTimeout(() => {
+            navigation.navigate('Home')
+          }, 1500);
+          // console.log(data)
           console.log('response', response.json());
         })
         .catch(error => {
+          failedToast();
           console.log('error', error);
         });
   };
 
-  let img = JSON.parse(route.params.image)[0];
-  // console.log('detail img : ', img)
-  let pic = {uri : `${process.env.API_URL}/${img}`};
-
-  // let imgs = img.map(function(imgDisplay){
-  //   return (<Image source={ {uri : `${process.env.API_URL}/${imgDisplay}`}} />)
-  // })
+  
 
   console.log(route.params.id);
   return (
-    <ScrollView>
+    <>
+  
+
+    <ScrollView style={styles.sectionWrapper}>
+      
       <View style={styles.container}>
-      {img  !== null ? 
-        <Image source={pic} style={styles.bg} />
-        : <Image source={require('../assets/default-placeholder.png')}
-        style={styles.bg} /> }
+        <View>
+          <View>
+          
+      <TouchableOpacity onPress={()=>navigation.goBack()}>
+      <View style={styles.backBtn}>
+      <Image source={require('../assets/back-arrow.png')} style={styles.backBtnImg}/>
+      </View>
+        </TouchableOpacity>
+            {images &&
+            (
+              <>
+                <Image
+                  source={{uri: images.uri}}
+                  style={styles.imgPlaceholder}
+                />
+              </>
+            ) !== null ? (
+              <Image source={{uri: images.uri}} style={styles.imgPlaceholder} />
+            ) : (
+              <View>
+                {pic !== null ? (
+                  <Image source={pic} style={styles.imgPlaceholder} />
+                ) : (
+                  <Image
+                    source={require('../assets/default-placeholder.png')}
+                    style={styles.imgPlaceholder}
+                  />
+                )}
+              </View>
+            )}
+          </View>
+        </View>
+
+        {/* {img !== null ? (
+          <Image source={pic} style={styles.bg} />
+        ) : (
+          <Image
+            source={require('../assets/default-placeholder.png')}
+            style={styles.bg}
+          />
+        )} */}
         {/* <Image source={require('../assets/detailbg.png')} style={styles.bg} /> */}
         <View style={styles.containerDesc}>
           <View style={styles.infoWrapper}>
@@ -141,9 +304,19 @@ function Detail({navigation, route}) {
               {role === 1 ? (
                 <View>
                   <TextInput
-                    style={styles.inputNameProductUpdate}
-                    placeholder={`${vehicle.name} Rp. ${vehicle.price}`}
+                    style={styles.inputNameProductUpdateTop}
+                    placeholder={vehicle.name}
                     onChangeText={onChangeName}
+                    // name='name'
+                    // value={setName}
+                    placeholderTextColor='black'
+                  />
+                   <TextInput
+                    style={styles.inputNameProductUpdateTop}
+                    placeholder={`Rp. ${vehicle.price}`}
+                    onChangeText={onChangePrice}
+                    // onChangeText={text => setName(text)}
+                    placeholderTextColor='black'
                   />
                 </View>
               ) : (
@@ -152,12 +325,21 @@ function Detail({navigation, route}) {
                 </Text>
               )}
               {role === 1 && (
-                <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}>
                   <Image
                     source={require('../assets/delete.png')}
                     style={styles.iconDelete}
                   />
-                </View>
+                </TouchableOpacity>
+                // <View>
+                //   <Image
+                //     source={require('../assets/delete.png')}
+                //     style={styles.iconDelete}
+                //   />
+                // </View>
               )}
             </View>
             <Text style={styles.titleDesc}>
@@ -298,7 +480,7 @@ function Detail({navigation, route}) {
             <View>
               <TouchableOpacity
                 style={styles.btnReserve}
-                onPress={handleUpdate}>
+                onPress={handleUpdateVehicle}>
                 <Text style={styles.reserve}>Update Item</Text>
               </TouchableOpacity>
             </View>
@@ -331,16 +513,85 @@ function Detail({navigation, route}) {
           )}
         </View>
       </View>
+
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(true);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Close</Text>
+              </Pressable>
+              {/* <Text style={styles.modalText}> ?</Text> */}
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => captureImage('photo')}
+                style={styles.btnModalWrapper}>
+                <Text style={styles.btnModalWrapperText}>
+                  Choose Photo from Camera
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={handleChoosePhoto}
+                style={styles.btnModalWrapper}>
+                <Text style={styles.btnModalWrapperText}>
+                  Choose Image from Gallery
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        {/* <Pressable
+        style={[style.button, style.buttonOpen]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={style.textStyle}>Show Modal</Text>
+      </Pressable> */}
+      </View>
     </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  // sectionWrapper :{
+  //   // position : 'relative',
+  //   zIndex : 1,
+  // },
+  backBtn:{
+    flexDirection: 'row',
+    position: 'absolute',
+    top : 0,
+    zIndex : 5,
+    backgroundColor: 'none',
+    paddingTop : 20,
+    marginLeft : 20,
+  },
+  backBtnImg:{
+    width : 40,
+    height : 40,
+  },
+  backBtnTxt:{
+    color : 'black',
+    fontWeight : 'bold',
+    fontSize : 20,
+    lineHeight : 37,
+  },
   container: {
     backgroundColor: '#fff',
     height: '100%',
     width: '100%',
-  },
+    position :'relative'
+,  },
   bg: {
     width: '100%',
     height: 250,
@@ -548,8 +799,94 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: 280,
     height: 120,
-    placeholderTextColor: 'black',
+    // placeholderTextColor: 'black',
   },
+  inputNameProductUpdateTop: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: 'bold',
+    width: 280,
+    height: 80,
+    // placeholderTextColor: 'black',
+  },
+  centeredView: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: 'black',
+    padding: 10,
+    borderRadius: 15,
+    height: 60,
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 10,
+    width: 150,
+  },
+  buttonOpen: {
+    backgroundColor: '#FFCD61',
+  },
+  buttonClose: {
+    backgroundColor: 'black',
+    marginBottom: 50,
+  },
+  textStyle: {
+    color: '#FFCD61',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    // color: '#000000',
+    fontSize: 15,
+    lineHeight: 35,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  btnModalWrapper: {
+    alignItems: 'center',
+    backgroundColor: '#FFCD61',
+    padding: 10,
+    borderRadius: 15,
+    height: 60,
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 10,
+    width: 250,
+    // marginLeft: '7%',
+  },
+  btnModalWrapperText: {
+    color: '#000000',
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 35,
+    // padding : 10,
+  },
+  imgPlaceholder: {
+    width: '100%',
+    height: 250,
+    zIndex : -1,
+    position : 'relative',
+    opacity : 0.9,
+  },  
 });
 
 export default Detail;

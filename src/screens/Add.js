@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
   TouchableHighlight,
+  ToastAndroid,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {addVehicle} from '../modules/utils/vehicles';
@@ -21,7 +22,10 @@ import RNFetchBlob from 'rn-fetch-blob'
 
 export default function Add(props) {
   const token = useSelector(state => state.auth.userData.token);
-  // console.log(token)
+  const ownerId = useSelector(state => state.auth.userData.id);
+
+  console.log('tokn and id owner', token, ownerId)
+  const [owner, setOwner]= useState(ownerId);
   const [name, onChangeName] = useState();
   const [type, onChangeType] = useState();
   const [brand, onChangeBrand] = useState();
@@ -38,6 +42,21 @@ export default function Add(props) {
   const [selectedAddTo, setSelectedAddTo] = useState();
   const [images, setImages] = useState('');
   const [udpateData, setUdpateData] = useState();
+
+  const successToast = () => {
+    ToastAndroid.showWithGravity(
+      'vehicel Add Success',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
+  const failedToast = () => {
+    ToastAndroid.showWithGravity(
+      'Add Vehicle Failed',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
 
   const addCounter = () => {
     const newCounter = counter + 1;
@@ -61,9 +80,10 @@ export default function Add(props) {
   };
 
   const handleAdd = () => {    
+    // setOwner(ownerId);
     RNFetchBlob.fetch('POST', `${process.env.API_URL}/vehicles`, {
     'x-access-token': token,
-    // Accept: 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'multipart/form-data',
   }, [
     { 
@@ -73,29 +93,32 @@ export default function Add(props) {
       data: RNFetchBlob.wrap(images.uri),
       // uri: Platform.OS === 'android' ? images.uri.replace('file://', '') : images.uri,
     },
+    { name : 'user_id', data : JSON.stringify(owner)},
     { name : 'name', data : name},
     { name : 'type', data : selectedAddTo},
     { name : 'price', data : number},
     { name : 'qty', data :  JSON.stringify(counter)},
     { name : 'location', data : selectedLoc},
     { name : 'description', data : description},
-    // { capacity : 'capacity', data : capacity},
-    // { status : 'status', data : status},
-    // { city : 'city', data : city},
-    // { brand : 'brand', data : brand},
+    { capacity : 'capacity', data : capacity},
+    { status : 'status', data : status},
+    { city : 'city', data : city},
+    { brand : 'brand', data : brand},
   ])
     .then(response => {
-        // console.log('img path formdata: ',response.images)
-        console.log('response', response);
-        // console.log(res.data.result)
-        setUdpateData(response.data)
-        const udpateDataVehicle ={
-          id : response.data.id
-          };        
-        console.log('response udpate data :', udpateData, udpateDataVehicle);
-        props.navigation.navigate('Detail', udpateData, udpateDataVehicle );
-      })
+        successToast();
+        props.navigation.navigate('Home');
+        console.log('img path formdata: ',response.images)
+        console.log('response', response.json());
+        console.log(res.data.result)
+        // setUdpateData(response.data)
+      //   const udpateDataVehicle ={
+      //     id : response.data.id
+      //     };        
+      //   console.log('response udpate data :', udpateData, udpateDataVehicle);
+       })
       .catch(error => {
+        failedToast();
         console.log('error', error);
       })  
   }

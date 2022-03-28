@@ -163,14 +163,14 @@ export default function EditProfile({navigation, route}) {
     if (images)
     RNFetchBlob.fetch('PATCH', `${process.env.API_URL}/users`, {
     'x-access-token': token,
-    Accept: 'application/json',
+    Accept : 'application/json',
     'Content-Type': 'multipart/form-data',
   }, [
     { 
-      name :'image',
-      type: images.type,
-      filename: images.fileName,
-      data: RNFetchBlob.wrap(images.uri),
+      name : 'image',
+      type : images.type,
+      filename : images.fileName,
+      data : RNFetchBlob.wrap(images.uri),
       // uri: Platform.OS === 'android' ? images.uri.replace('file://', '') : images.uri,
     },
     // if()
@@ -201,6 +201,9 @@ export default function EditProfile({navigation, route}) {
   console.log(profilePic, profile);
   return (
     <>
+    <TouchableOpacity onPress={()=>navigation.goBack()}>
+      <Text>Back</Text>
+    </TouchableOpacity>
     <ScrollView style={styles.bg}>
       <View
         style={{

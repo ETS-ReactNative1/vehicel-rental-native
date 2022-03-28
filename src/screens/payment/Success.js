@@ -5,6 +5,10 @@ export default function Success({navigation, route}) {
   const {body, paymentBody, payType} = route.params;
   const a = paymentBody.date.toDateString();
   return (
+    <>
+      <TouchableOpacity onPress={()=>navigation.goBack()}>
+      <Text>Back</Text>
+    </TouchableOpacity>
     <ScrollView style={styles.bg}>
         <Text style={styles.success}>Payment Success!</Text>
       {/* </View> */}
@@ -30,6 +34,7 @@ export default function Success({navigation, route}) {
         <Text style={styles.priceBtn}>Total : Rp. {paymentBody.price}</Text>
       </TouchableOpacity>
     </ScrollView>
+    </>
   )
 }
 

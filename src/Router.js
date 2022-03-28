@@ -12,7 +12,7 @@ import Forgot from './screens/Forgot';
 import Home from './screens/home/Home';
 import Add from './screens/Add';
 import Chat from './screens/Chat';
-import Search from './screens/Search';
+import Search from './screens/search/Search';
 import History from './screens/History';
 import DetailsCategory from './screens/DetailsCategory';
 import Detail from './screens/Detail';
@@ -22,7 +22,7 @@ import FinishPayment from './screens/payment/FinishPayment';
 import Success from './screens/payment/Success';
 import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
-import FilterProduct from './screens/FilterProduct';
+import FilterProduct from './screens/search/FilterProduct';
 
 
 const Stack = createStackNavigator();

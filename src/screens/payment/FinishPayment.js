@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  
 } from 'react-native';
 import React from 'react';
 import {postPayment} from '../../modules/utils/payment';
@@ -19,6 +20,21 @@ export default function FinishPayment({navigation, route}) {
   console.log('bohadlankmsd: ', userId, vehicleId);
 
   const [withoutTime] = paymentBody.date.toISOString().split('T');
+  const successToast = () => {
+    ToastAndroid.showWithGravity(
+      "Transaction Success",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+  };
+  const failedToast = () => {
+    ToastAndroid.showWithGravity(
+      "Transaction Failed",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+  };
+
   // console.log(withoutTime);
   // const startDate = withoutTime.toDateString();
   // console.log('user id : ', body.id);
@@ -39,15 +55,21 @@ export default function FinishPayment({navigation, route}) {
 
     postPayment(body)
       .then(res => {
+        successToast();
         console.log(res);
         console.log(res.data);
       })
       .catch(err => {
+        failedToast();
         console.log(err);
       });
   };
 
   return (
+    <>
+    <TouchableOpacity onPress={()=>navigation.goBack()}>
+      <Text>Back</Text>
+    </TouchableOpacity>
     <ScrollView>
       <View style={styles.bg}>
         {/* <ScrollView> */}
@@ -106,6 +128,7 @@ export default function FinishPayment({navigation, route}) {
         </TouchableOpacity>
       </View>
     </ScrollView>
+    </>
   );
 }
 

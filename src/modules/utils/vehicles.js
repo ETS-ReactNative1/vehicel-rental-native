@@ -1,28 +1,26 @@
 import axios from 'axios';
 
-const getCar = axios.get(`${process.env.API_URL}/vehicles?type=car&page=1&limit=6`);
+const getCar = axios.get(`${process.env.API_URL}/vehicles?page=1&limit=8&types=car`);
 
 const getMotorbike = axios.get(
-  `${process.env.API_URL}/vehicles?type=motorbike&page=1&limit=6`,
+  `${process.env.API_URL}/vehicles?page=1&limit=8&types=motorbike`
 );
 
-const getBike = axios.get(`${process.env.API_URL}/vehicles?type=bike&page=1&limit=6`);
+const getBike = axios.get(`${process.env.API_URL}/vehicles?page=1&limit=8&types=bike`);
 
 export const getAllVehicle = () => {
   return axios.all([getCar, getMotorbike, getBike]);
 };
 
-export const getVehicleCategory = (type, limit) => {
-  // , currentPage
-  const URL_TYPE = `${process.env.API_URL}/vehicles?type=${type}&page=1&limit=${limit}`;
-  // console.log(URL_TYPE)
+export const getVehicleCategory = (type) => {
+  const URL_TYPE = `${process.env.API_URL}/vehicles?page=1&limit=8&types=${type}`  
   return axios.get(URL_TYPE);
 };
 
 const URL = `${process.env.API_URL}/vehicles/`;
 
 export const getVehicles = () => {
-  return axios.get(URL);
+  return axios.get(URL+'all');
 };
 
 ///:id
@@ -53,3 +51,8 @@ export const addVehicle = (token, body) => {
 // export const getVehicleCategory = () => {
 //   return axios.get(URLCategory)
 // }
+
+export const filterVehicle = (vtype, search, location) => {
+  const FilterURL = `${process.env.API_URL}/vehicles?page=1&limit=8&types=${vtype}&name=${search}&location=${location}`;
+  return axios.get(FilterURL);
+};
