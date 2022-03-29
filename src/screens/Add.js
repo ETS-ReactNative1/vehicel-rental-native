@@ -161,6 +161,7 @@ export default function Add(props) {
         onChangeText={onChangeName}
         value={name}
         placeholder="Type product name min. 30 characters"
+        placeholderTextColor='black'
       />
       </View>
       <View>
@@ -170,6 +171,8 @@ export default function Add(props) {
         onChangeText={onChangeNumber}
         value={number}
         placeholder="Type product price"
+        placeholderTextColor='black'
+
         // keyboardType="numeric"
       />
       </View>
@@ -180,6 +183,8 @@ export default function Add(props) {
           onChangeText={onChangeDescription}
           value={description}
           placeholder="Description placeholder"
+        placeholderTextColor='black'
+
           // keyboardType="numeric"
         />
         <View>
@@ -264,12 +269,15 @@ const styles = StyleSheet.create({
     borderBottomColor: '#393939',
     width: '80%',
     marginLeft: '8%',
+    color : 'black',
   },
   menuTitle: {
     fontSize: 17,
     fontWeight: '900',
     margin: 10,
     paddingLeft: '6%',
+    color : 'black',
+
   },
   counter: {
     fontSize: 17,
@@ -278,6 +286,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFCD61',
     borderRadius: 12,
     width: 25,
+    color : 'black',
+
     height: 25,
     paddingLeft: 8,
   },
@@ -285,17 +295,23 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '900',
     margin: 10,
+    color : 'black',
+
   },
   counterWrapper: {
     flexDirection: 'row',
     width: 385,
     marginTop: 20,
+    color : 'black',
+
   },
   btnCounterWrapper: {
     marginLeft: '40%',
     flex: 1,
     textAlign: 'right',
     flexDirection: 'row',
+    color : 'black',
+
   },
   btnAddPic: {
     alignItems: 'center',
@@ -305,6 +321,8 @@ const styles = StyleSheet.create({
     height: 60,
     textAlign: 'center',
     width: '60%',
+    color : 'black',
+
     marginTop: 40,
     marginBottom: 40,
     // marginLeft: '20%',
@@ -323,6 +341,8 @@ const styles = StyleSheet.create({
     height: 60,
     textAlign: 'center',
     width: '80%',
+    color : 'black',
+
     marginLeft: '8%',
     marginTop: 40,
     marginBottom: 60,

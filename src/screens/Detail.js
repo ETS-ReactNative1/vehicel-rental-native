@@ -26,8 +26,8 @@ function Detail({navigation, route}) {
   const token = useSelector(state => state.auth.userData.token);
 
   const [setName, onChangeName] = useState(null);
-  const [setPrice, onChangePrice] = useState();
-  const [countUp, setupCounter] = useState({counter});
+  const [setPrice, onChangePrice] = useState(null);
+  const [countUp, setupCounter] = useState(counter);
 
 
   const [filePath, setFilePath] = useState({});
@@ -228,7 +228,7 @@ function Detail({navigation, route}) {
           },
           {name : 'name', data : setName},
           {name : 'price', data : setPrice},
-          {name : 'qty', data : countUp}, 
+          {name : 'qty', data : JSON.stringify(counter)}, 
           {name : 'status', data : selectedStatus},
         ])
         .then(response => {
@@ -325,6 +325,7 @@ function Detail({navigation, route}) {
                 </Text>
               )}
               {role === 1 && (
+                <>
                 <TouchableOpacity
                   onPress={() => {
                     setModalVisible(!modalVisible);
@@ -334,12 +335,18 @@ function Detail({navigation, route}) {
                     style={styles.iconDelete}
                   />
                 </TouchableOpacity>
-                // <View>
+                <View>
+                 <TouchableOpacity>
+                <Image source={require('../assets/pencilEdit.png')} style={styles.imgPic}/>
+                 </TouchableOpacity>
+               </View>
+                {/* // <View>
                 //   <Image
                 //     source={require('../assets/delete.png')}
                 //     style={styles.iconDelete}
                 //   />
-                // </View>
+                // </View> */}
+                </>
               )}
             </View>
             <Text style={styles.titleDesc}>

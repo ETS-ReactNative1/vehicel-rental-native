@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -7,29 +7,79 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
+import {co} from '../../modules/utils/auth';
 
-const Forgot = ({navigation}) => {
-  const [email, onChangeText] = useState('');
-  const [password, onChangePsd] = useState('');
+export default function Checkotp({navigation}) {
+
+  const [email, setEmail] = useState(null);
+  const [otp, setOtp] = useState(null);
+
+
+  const successToast = () => {
+    ToastAndroid.showWithGravity(
+      'Otp Checked',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
+  const failedToast = () => {
+    ToastAndroid.showWithGravity(
+      'Something wrong ',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
+
+
+  // console.log('body : ',body)
+  console.log('body emmail : ',email)
+  const forgotHandlerOtp = () =>{
+    console.log('body emmail axiso : ',email)
+    const body = {
+      email : email,
+      otp : otp,
+    }
+    
+      co(body)
+      .then((res) => {
+        console.log(res.data.result)
+        successToast();
+        setTimeout(() => {
+          navigation.navigate('Reset')
+        }, 1500);
+      }).catch((err) => {
+        failedToast();
+        console.log(err)
+      });
+    } 
+  
+
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/fp.png')}
+        source={require('../../assets/fp.png')}
         resizeMode="cover"
         style={styles.image}>
         <Text style={styles.text}>THAT'S OKAY, WE GOT YOUR BACK</Text>
         <SafeAreaView>
           <TextInput
             style={styles.input}
-            onChangeText={onChangeText}
             value={email}
             placeholder="email"
+            onChangeText={text => setEmail(text)}
+          />
+           <TextInput
+            style={styles.input}
+            value={otp}
+            placeholder="otp"
+            onChangeText={text => setOtp(text)}
           />
         </SafeAreaView>
         <View style={styles.containerFp}>
-          <TouchableOpacity style={styles.btnLgn}>
-            <Text style={styles.login}> Send Code </Text>
+          <TouchableOpacity style={styles.btnLgn} onPress={forgotHandlerOtp}>
+            <Text style={styles.login}> Check Otp </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -62,6 +112,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     backgroundColor: '#DFDEDE',
+    color: 'black',
   },
   containerFp: {
     justifyContent: 'center',
@@ -80,6 +131,7 @@ const styles = StyleSheet.create({
   },
   btnLgn: {
     alignItems: 'center',
+    
     backgroundColor: '#FFCD61',
     padding: 10,
     borderRadius: 15,
@@ -94,4 +146,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Forgot;

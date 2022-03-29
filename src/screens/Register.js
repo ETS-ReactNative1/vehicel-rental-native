@@ -155,6 +155,7 @@ function Register({navigation}) {
                 placeholder="email"
                 onChangeText={val => TextInputChange(val)}
                 onEndEditing={e => handleValidUser(e.nativeEvent.text)}
+                placeholderTextColor='black'
                 // onChangeText={handleChange('email', setEmail('email'))}
                 // onBlur={handleBlur('email')}
               />
@@ -170,6 +171,8 @@ function Register({navigation}) {
                 // value={name}
                 placeholder="username"
                 onChangeText={val => handleValidUserName(val)}
+                placeholderTextColor='black'
+
                 // onEndEditing={e => handleValidUserName(e.nativeEvent.text)}
               />
 
@@ -185,6 +188,8 @@ function Register({navigation}) {
                 // value={password}
                 secureTextEntry={true}
                 placeholder="password"
+                placeholderTextColor='black'
+
                 onChangeText={val => handleValidPassword(val)}
               />
               {data.isValidPassword ? null : (
@@ -240,6 +245,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     backgroundColor: '#DFDEDE',
+    color : 'black',
   },
   containerFp: {
     justifyContent: 'center',

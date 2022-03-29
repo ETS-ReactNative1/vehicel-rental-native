@@ -46,7 +46,7 @@ export default function History({navigation}) {
 
   useEffect(() => {
     // const id = route.params.id;
-    getHistory(id)
+    getHistory(token)
     .then((res) => {
       setHistory(res.data.result)
       console.log(res.data.result)
@@ -197,7 +197,7 @@ export default function History({navigation}) {
       </View>
       <View>
       <TouchableOpacity style={style.btnLgt}>
-        <Text style={style.logout} onPress={() => navigation.navigate('Login')}>
+        <Text style={style.logout} onPress={() => {navigation.navigate('Login')}}>
           Go to Login
         </Text>
       </TouchableOpacity>
@@ -240,8 +240,10 @@ const style = StyleSheet.create({
   title:{
     fontSize : 16,
     fontWeight: 'bold',
+    color : 'black',
   },
   titleNd:{
+    color : 'black',
     fontSize : 16,
   },
   titleRd:{
@@ -252,6 +254,7 @@ const style = StyleSheet.create({
     width : 40,
     height : 40,
     marginLeft : 20,
+    color : 'black',
   },
   cardHistory :{
     flexDirection : 'row',
@@ -260,6 +263,8 @@ const style = StyleSheet.create({
     width : '100%',
     marginTop : 20,
     marginBottom : 20,
+    color : 'black',
+
   },
   titleBg:{
     fontSize : 24,
@@ -277,6 +282,7 @@ const style = StyleSheet.create({
     textAlign: 'center',
     marginTop: '25%',
     width: 350,
+    color : 'black',
     marginLeft: '7%',
   },
   logout: {
@@ -314,6 +320,7 @@ const style = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     height: 60,
+    color : 'black',
     textAlign: 'center',
     marginTop: 5,
     marginBottom: 10,
@@ -349,6 +356,7 @@ const style = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     height: 60,
+    color : 'black',
     textAlign: 'center',
     marginTop: 5,
     marginBottom: 10,

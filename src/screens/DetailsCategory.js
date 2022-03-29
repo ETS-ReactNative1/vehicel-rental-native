@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     width : '100%',
     marginTop : 20,
     marginBottom : 20,
+    color: 'black',
     marginLeft: 20,
   },
   headerWrapper: {
@@ -177,6 +178,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 10,
     marginBottom: 15,
+    color: 'black',
   },
   loading: {
     width: 250,
@@ -189,14 +191,19 @@ const styles = StyleSheet.create({
     height : 120,
     // margin : 10,
     marginLeft : 15,
+    color : 'black',
+
     marginRight: 30,
   },
   title:{
     fontSize : 16,
     fontWeight: 'bold',
+    color : 'black',
   },
   titleNd:{
     fontSize : 16,
+    color : 'black',
+
   },
   titleRd:{
     fontSize : 16,

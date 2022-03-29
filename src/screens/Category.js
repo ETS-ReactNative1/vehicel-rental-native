@@ -87,7 +87,8 @@ imageWrapper: {
   title: {
     fontWeight: 'bold',
     fontSize: 23,
-    color: '#393939',
+    // color: '#393939',
+    color : 'black',
     marginTop: '4%',
     marginLeft: '5%',
     flex: 1,
@@ -107,6 +108,8 @@ imageWrapper: {
     marginRight: 10,
     marginTop: 10,
     marginBottom: 15,
+    color : 'black',
+
   },
   loading: {
     width: 250,

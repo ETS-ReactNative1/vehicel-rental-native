@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {loginAction} from '../store/actions/auth';
-import {Formik} from 'formik';
-import * as yup from 'yup';
+// import {Formik} from 'formik';
+// import * as yup from 'yup';
 
 const Login = props => {
   const token = useSelector(state => state.auth.userData.token);
@@ -128,7 +128,7 @@ const Login = props => {
       successToast();
       setTimeout(() => {
         navigation.navigate('NavBottom');
-      }, 2000);
+      }, 1500);
       console.log('login success');
     }
     if (props.auth.isRejected === true) {
@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#DFDEDE',
     opacity: 0.8,
+    color: 'black',
   },
   containerFp: {
     justifyContent: 'center',

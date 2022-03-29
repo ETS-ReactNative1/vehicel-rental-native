@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     info:{
         fontSize : 16,
         marginBottom: 5,
+        color:'black',
     },
     status:{
         fontSize : 16,

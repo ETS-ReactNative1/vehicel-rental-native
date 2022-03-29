@@ -263,6 +263,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop : 20,
     marginLeft : 20,
+    color: 'black',
+
   },
   backBtnImg:{
     width : 40,
@@ -276,10 +278,14 @@ const styles = StyleSheet.create({
   },
   bg:{
     backgroundColor : 'white',
+    color: 'black',
+
   },
   filterCardWrapper:{
     // flexDirection : 'row',
     width : '100%',
+    color: 'black',
+
     marginLeft: 10,
     flexDirection: 'row',
   },
@@ -330,7 +336,9 @@ const styles = StyleSheet.create({
   containerSwitch: {
     // flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    color: 'black',
+
   },
   btnLgn: {
   alignItems: 'center',
@@ -340,6 +348,8 @@ const styles = StyleSheet.create({
   height: 60,
   textAlign: 'center',
   marginBottom: 40,
+  color: 'black',
+
   marginLeft: 10,
   marginRight: 10,
 },

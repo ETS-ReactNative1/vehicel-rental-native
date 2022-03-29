@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import {postPayment} from '../../modules/utils/payment';
+import {
+  sendLocalNotification,
+} from '../../modules/utils/notifications';
 
 export default function FinishPayment({navigation, route}) {
   const {body, paymentBody, payType, bookCode} = route.params;
@@ -123,6 +126,10 @@ export default function FinishPayment({navigation, route}) {
           onPress={() => {
             navigation.navigate('Success', {body, paymentBody, payType});
             paymentHandler();
+            sendLocalNotification({
+              title: 'Vehicle Rental',
+              message: 'Payment Success',
+            });
           }}>
           <Text style={styles.payBtn}>Finish Payment</Text>
         </TouchableOpacity>

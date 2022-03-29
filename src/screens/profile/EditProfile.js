@@ -243,7 +243,7 @@ export default function EditProfile({navigation, route}) {
         status={ checked === 'first' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('first')}
         />
-      <Text>Female</Text>
+      <Text style={styles.CheckboxItemTxt}>Female</Text>
       </View>
       <View style={styles.CheckboxItem}>  
       <RadioButton
@@ -254,7 +254,7 @@ export default function EditProfile({navigation, route}) {
         status={ checked === 'second' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('second')}
       />
-      <Text>Male</Text>
+      <Text style={styles.CheckboxItemTxt}>Male</Text>
       </View>
     </View>
 
@@ -403,6 +403,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems : 'center',
         textAlign : 'center',
+    color: 'black',
+
         borderWidth : 0,
       },
       imgPic:{
@@ -410,6 +412,8 @@ const styles = StyleSheet.create({
           width : 40,
           height : 40,
           borderRadius : 10,
+    color: 'black',
+
           top : -40,
           left : 50,
         //   marginLeft : '40%',
@@ -417,6 +421,8 @@ const styles = StyleSheet.create({
       inputBiodata:{
         borderWidth: 1.5,
         backgroundColor : '#fff',
+    color: 'black',
+
         borderColor: '#DFDEDE',
         borderRadius : 10,
         paddingLeft : 20,
@@ -430,6 +436,8 @@ const styles = StyleSheet.create({
       inputWrapper:{
         paddingLeft : 20,
         marginBottom : 20,
+    color: 'black',
+
         width : '88%',
         marginLeft : '3%',
         fontSize: 17,
@@ -438,6 +446,8 @@ const styles = StyleSheet.create({
       inputWrapperTitle:{
         fontSize: 14,
         fontWeight : '500',
+    color: 'black',
+
       },
       btn: {
         alignItems: 'center',
@@ -445,6 +455,8 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 15,
         height: 60,
+    color: 'black',
+
         textAlign: 'center',
         marginTop: 5,
         marginBottom: 30,
@@ -464,6 +476,8 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 15,
         height: 60,
+    color: 'black',
+
         textAlign: 'center',
         width: '65%',
         marginTop: 40,
@@ -474,6 +488,7 @@ const styles = StyleSheet.create({
         color: '#FFCD61',
         fontWeight: 'bold',
         fontSize: 17,
+
         lineHeight: 35,
       },
       imgPlaceholder: {
@@ -488,6 +503,8 @@ const styles = StyleSheet.create({
         alignItems : 'center',
         textAlign : 'center',
         marginLeft : '28%',
+    color: 'black',
+
         marginBottom : 30,
       },
       CheckboxItem:{
@@ -521,6 +538,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+    color: 'black',
+
         marginTop: 22
       },
       modalView: {
@@ -528,6 +547,8 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
+    color: 'black',
+
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -544,6 +565,8 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 15,
         height: 60,
+    color: 'black',
+
         textAlign: 'center',
         marginTop: 5,
         marginBottom: 10,
@@ -551,6 +574,8 @@ const styles = StyleSheet.create({
       },
       buttonOpen: {
         backgroundColor: "#FFCD61",
+    color: 'black',
+
       },
       buttonClose: {
         backgroundColor: "black",
@@ -566,11 +591,15 @@ const styles = StyleSheet.create({
       },
       modalText: {
         marginBottom: 15,
+    color: 'black',
+
         textAlign: "center"
       },
       btnModalWrapper: {
         alignItems: 'center',
         backgroundColor: '#FFCD61',
+    color: 'black',
+
         padding: 10,
         borderRadius: 15,
         height: 60,
@@ -586,5 +615,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         lineHeight: 35,
         // padding : 10,
+      },
+      CheckboxItemTxt:{
+        color: 'black',
       },
 })

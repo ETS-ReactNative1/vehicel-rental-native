@@ -11,18 +11,17 @@ import {getVehicleCategory, getVehicles} from '../../modules/utils/vehicles';
 // ]
 
 export default function Search({navigation}) {
-
+  // const searchInput = route.params;
   const [vehicle, setVehicle] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState('');
   const [stateSearch, setStateSearch] = useState({ data: []})
   
-  // console.log('vehicle', vehicle);
-
+  console.log('1 vehicle :', vehicle);
+// console.log('Search Page : ',searchInput);
   const [pic, setPic] = useState(null);
 
   const { data } = vehicle;
-  console.log(vehicle)
 
   const getVehicle = () => {
     // const type = route.params.type;
@@ -31,7 +30,7 @@ export default function Search({navigation}) {
     getVehicles(type, limit)
       .then((res, data) => {
         setIsLoading(true);
-        console.log('get Vehicles : ', res.data.result)
+        console.log('3 get Vehicles : ', res.data.result)
         setVehicle(res.data.result)
         // setVehicle([...vehicle, ...res.data.result.data]);
         // console.log('data search : ' , data)
@@ -64,15 +63,15 @@ export default function Search({navigation}) {
     getVehicle();
   }, []);
 
-  console.log('searh base : ',vehicle)
 
   const searchFilterData = text 
   ? vehicle.filter(item=>{
     const itemData = item.name;
     const textData = text;
     return itemData.indexOf(textData) > -1;
-  }): vehicle;
-  // console.log('data filetr :' ,data, vehicle)
+  }) : vehicle;
+
+  ///HANDLE JIKA BERTEMU NULL
 
   //Just for testing separatir item
   const itemSeparator = () => {
@@ -124,14 +123,15 @@ export default function Search({navigation}) {
     //   keyExtractor={(item, index)=> index.toString()}
     //   />
     // </View>
-    <>
+    <View style={styles.bgOutside}>
+    <View style={styles.btnBgBack}>
     <TouchableOpacity onPress={()=>navigation.goBack()}>
       <View style={styles.backBtn}>
       <Image source={require('../../assets/back-arrow.png')} style={styles.backBtnImg}/>
       <Text style={styles.backBtnTxt}>Back</Text>
       </View>
     </TouchableOpacity>
-
+    </View>
     <SafeAreaView style={styles.bg}>
       {isLoading === true ? (
       <View>
@@ -142,7 +142,7 @@ export default function Search({navigation}) {
             value={text}
             // underlineColorAndroid="transparent"
             placeholder="Search Here"
-            placeholderTextColor ='white'
+            placeholderTextColor ='black'
           />
             <View>
            <TouchableOpacity style={styles.btnAdd} onPress={()=> navigation.navigate('FilterProduct')}>
@@ -201,16 +201,23 @@ export default function Search({navigation}) {
       )}
     </SafeAreaView>
 
-    </>
+    </View>
   )
 }
 
 
 const styles = StyleSheet.create({
+  bgOutside:{
+    backgroundColor: 'white',
+  },
+  btnBgBack:{
+    backgroundColor: 'white',
+  },
   backBtn:{
     flexDirection: 'row',
     backgroundColor: 'white',
     paddingTop : 20,
+    color: 'black',
     marginLeft : 20,
   },
   backBtnImg:{
@@ -222,6 +229,7 @@ const styles = StyleSheet.create({
     fontWeight : 'bold',
     fontSize : 20,
     lineHeight : 37,
+    backgroundColor: 'white',
   },
   bg:{
     backgroundColor : '#fff',
@@ -273,11 +281,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 10,
     marginBottom: 15,
+    color: 'black',
+
   },
   loading: {
     width: 300,
     height: '100%',
     marginLeft: 50,
+    color: 'black',
+
   },
   imageWrapper:{
     borderRadius : 30,
@@ -290,9 +302,13 @@ const styles = StyleSheet.create({
   title:{
     fontSize : 16,
     fontWeight: 'bold',
+    color: 'black',
+
   },
   titleNd:{
     fontSize : 16,
+    color: 'black',
+
   },
   titleRd:{
     fontSize : 16,
@@ -305,6 +321,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     backgroundColor: '#DFDEDE',
+    color: 'black',
+
   },
   btnAdd: {
     alignItems: 'center',
@@ -316,6 +334,8 @@ const styles = StyleSheet.create({
     // width : '150',
     marginLeft: '8%',
     flexDirection : 'row',
+    color: 'black',
+
   },
   AddBtn: {
     color : '#393939',
@@ -335,7 +355,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     backgroundColor: '#393939',
-    color : 'white',
+    color : 'black',
     // placeholderTextColor : '#fff',
     // placeholderTextColor : '#ffffff',
     opacity : .3,

@@ -23,6 +23,22 @@ export default function Home({navigation}) {
   const [bikes, setBikes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pic, setPic] = useState(null);
+  // const [search, setSearch] = useState(null);
+
+  // const submitted =()=>{
+  //   console.log('first search from Home');
+  //   // const searchInput = {
+  //   //   text : search,
+  //   // };
+  //   navigation.navigate('Search');
+  // }
+
+  // const searchDataInput = searchData =>{
+  //   setSearch({
+  //     ...search,
+  //     searchData : searchData,
+  //   })
+  // }
 
   const getVehicleType = () => {
     getAllVehicle()
@@ -61,6 +77,10 @@ export default function Home({navigation}) {
        style={styles.input}
        placeholder="search"
        placeholderTextColor = 'white'
+      //  value={setSearch}
+      //  name={searchData}
+      //  onSubmitEditing={()=>submitted()}
+      //  onClick={()=>searchDataInput()}
        />
         { role === 1 && (
           <View>

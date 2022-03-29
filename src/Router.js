@@ -8,7 +8,9 @@ import SplashScreen from 'react-native-splash-screen';
 
 import Login from './screens/Login';
 import Register from './screens/Register';
-import Forgot from './screens/Forgot';
+import Forgot from './screens/forgot/Forgot';
+import Checkotp from './screens/forgot/Checkotp';
+import Reset from './screens/forgot/Reset';
 import Home from './screens/home/Home';
 import Add from './screens/Add';
 import Chat from './screens/Chat';
@@ -23,7 +25,7 @@ import Success from './screens/payment/Success';
 import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
 import FilterProduct from './screens/search/FilterProduct';
-
+import FilterResult from './screens/search/FilterResult';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -150,6 +152,8 @@ const Router = () => {
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Register" component={Register} />
     <Stack.Screen name="ForgotPassword" component={Forgot} />
+    <Stack.Screen name="Checkotp" component={Checkotp} />
+    <Stack.Screen name="Reset" component={Reset} />
     <Stack.Screen name="EditProfile" component={EditProfile} />
     {/* <Stack.Screen name="HomeAdmin" component={HomeAdmin} /> */}
     <Stack.Screen name="Add" component={Add} />
@@ -160,7 +164,9 @@ const Router = () => {
     <Stack.Screen name="GetPayment" component={GetPayment} />
     <Stack.Screen name="FinishPayment" component={FinishPayment} />
     <Stack.Screen name="Success" component={Success} />
+    <Stack.Screen name="Search" component={Search} />
     <Stack.Screen name="FilterProduct" component={FilterProduct} />
+    <Stack.Screen name="FilterResult" component={FilterResult} />
   </Stack.Navigator>
 );
 }

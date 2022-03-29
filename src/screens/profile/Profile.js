@@ -122,7 +122,7 @@ export default function Profile({navigation}) {
         <Text style={styles.titleBg}>You must be login</Text>
         </View>
     <TouchableOpacity style={styles.btnLgt}
-     onPress={() =>navigation.navigate('Login')}>
+     onPress={() => {navigation.navigate('Login')}}>
       <Text style={styles.logout}>
         Login
       </Text>
@@ -197,6 +197,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 5,
     marginTop : 30,
+    color: 'black',
+
   },
   menu: {
     fontWeight: '500',
@@ -214,6 +216,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 60,
     textAlign: 'center',
+    color: 'black',
+
     marginTop: '25%',
     width: 350,
     marginLeft: '7%',
@@ -230,18 +234,24 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 75,
     marginLeft : 30,
+    color: 'black',
+
     marginBottom : 20,
   },
   titleBg:{
     fontSize : 24,
     fontWeight : '600',
     textAlign : 'center',
+    color: 'black',
+
   },
   centeredView: {
     width : '100%',
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    color: 'black',
+
     marginTop: 22
   },
   modalView: {
@@ -266,12 +276,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 60,
     textAlign: 'center',
+    color: 'black',
+
     marginTop: 5,
     marginBottom: 10,
     width: 150,
   },
   buttonOpen: {
     backgroundColor: "#FFCD61",
+    color: 'black',
+
   },
   buttonClose: {
     backgroundColor: "black",
@@ -302,6 +316,8 @@ const styles = StyleSheet.create({
     height: 60,
     textAlign: 'center',
     marginTop: 5,
+    color: 'black',
+
     marginBottom: 10,
     width: 250,
     // marginLeft: '7%',
