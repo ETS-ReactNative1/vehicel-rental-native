@@ -16,7 +16,7 @@ Rental Vehicle is a mobile app built using React Native. This Vehicle Rental app
 Clone this repository by run the following code:
 
 ```
-$ git clone https://github.com/okidwijaya/rental-deploy
+$ git clone https://github.com/okidwijaya/vehicel-rental-native
 ```
 ## 2. Go to directory
 
@@ -49,7 +49,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ### Deployment
 
-Rental Vehicle : [Rental Vehicle](https://drive.google.com/file/d/1fInJWvDSS2kkVUkRwBtMc-XVBlXz5h7W/view?usp=sharing)
+Rental Vehicle Apk : [Rental Vehicle](https://drive.google.com/file/d/1fInJWvDSS2kkVUkRwBtMc-XVBlXz5h7W/view?usp=sharing)
 
 ## Related Project 
 
